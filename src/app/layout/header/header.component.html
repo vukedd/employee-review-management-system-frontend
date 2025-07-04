@@ -1,0 +1,19 @@
+<div class="flex justify-content-between w-full border-bottom-1 pb-3 pt-1">
+    <div class="flex justify-content-center align-items-center text-xl ml-3">
+        PeopleCompass
+    </div>
+    <div class="flex justify-content-end w-10rem px-3" *ngIf="!isLoggedIn()">
+        <p-button (onClick)="openLoginModal()" >Log in</p-button>
+    </div>
+    <div class="flex justify-content-end w-10rem px-3" *ngIf="isLoggedIn()">
+        <p-button (onClick)="logout()">Log out</p-button>
+    </div>
+</div>
+
+<p-dialog [(visible)]="isLogin" [dismissableMask]="true" [draggable]="false"  [style]="{ width: '350px', height: 'auto' }" header="Log in">
+    <app-login (switchToRegister)="handleSwitchToRegister()" (loginSuccess)="handleLoginSuccess()"></app-login>
+</p-dialog>
+
+<p-dialog [(visible)]="isRegister" [dismissableMask]="true" [draggable]="false"  [style]="{ width: '300px', height: 'auto' }" header="Register">
+    <app-register (switchToLogin)="handleSwitchToLogin()"></app-register>
+</p-dialog>

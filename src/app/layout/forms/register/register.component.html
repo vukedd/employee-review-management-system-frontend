@@ -1,0 +1,64 @@
+<form [formGroup]="registerForm" class="">
+    <div class="p-2 flex justify-content-center align-items-center flex-column">
+        <div class="mb-3">
+            <p-floatlabel variant="in">
+                <input pInputText 
+                id="firstName" 
+                autocomplete="off" 
+                formControlName="firstName" 
+                class="h-3rem"
+                pTooltip="First name must contain from 2 to 20 textual characters without spaces!"/>
+                <label for="firstName">First name</label>
+            </p-floatlabel>
+        </div>
+        <div class="mb-3">
+            <p-floatlabel variant="in">
+                <input pInputText 
+                id="lastName" 
+                autocomplete="off" 
+                formControlName="lastName" 
+                class="h-3rem"
+                pTooltip="Last name must contain from 2 to 20 textual characters without spaces!"/>
+                <label for="lastName">Last name</label>
+            </p-floatlabel>
+        </div>
+        <div class="mb-3">
+            <p-floatlabel variant="in">
+                <input pInputText 
+                id="username" 
+                autocomplete="off" 
+                formControlName="username" 
+                class="h-3rem"
+                pTooltip="Username must contain from 5 to 15 alphanumerical characters without spaces!"/>
+                <label for="username">Username</label>
+            </p-floatlabel>
+        </div>
+        <div class="mb-3">
+            <p-floatlabel variant="in">
+                <input pInputText 
+                id="email" 
+                autocomplete="off" 
+                formControlName="email" 
+                class="h-3rem"
+                pTooltip="Please enter a valid e-mail address!"/>
+                <label for="email">E-mail</label>
+            </p-floatlabel>
+        </div>
+        <div class="mb-3">
+            <p-floatlabel variant="in">
+                <input pInputText 
+                type="password" 
+                id="password" 
+                autocomplete="off" 
+                formControlName="password" 
+                class="h-3rem"
+                pTooltip="The password must contain at least 8 characters with at least one numerical and one text character!"/>
+                <label for="password">Password</label>
+            </p-floatlabel>
+        </div>
+        <div class="mb-3">
+            <span>Already have an account? </span><a href="#" (click)="onSignInClick(); $event.preventDefault()"> Sign in!</a>
+        </div>
+        <p-button [type]="'submit'" [loading]="loading" (onClick)="submitRegisterRequest()">Submit</p-button>
+    </div>
+</form>

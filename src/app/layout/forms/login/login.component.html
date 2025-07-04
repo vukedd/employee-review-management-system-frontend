@@ -1,0 +1,29 @@
+<form [formGroup]="loginForm" class="">
+    <div class="p-2 flex justify-content-center align-items-center flex-column">
+        <div class="mb-3">
+            <p-floatlabel variant="in">
+                <input pInputText 
+                id="username" 
+                autocomplete="off" 
+                formControlName="username" 
+                class="h-3rem"/>
+                <label for="username">Username</label>
+            </p-floatlabel>
+        </div>
+        <div class="mb-3">
+            <p-floatlabel variant="in">
+                <input pInputText 
+                type="password" 
+                id="password" 
+                autocomplete="off" 
+                formControlName="password" 
+                class="h-3rem"/>
+                <label for="password">Password</label>
+            </p-floatlabel>
+        </div>
+        <div class="mb-3">
+            <span>Don't have an account? </span><a href="#" (click)="onSignUpClick(); $event.preventDefault()"> Sign up here!</a>
+        </div>
+        <p-button [type]="'submit'" [loading]="loading" (onClick)="submitLoginRequest()">Submit</p-button>
+    </div>
+</form>
