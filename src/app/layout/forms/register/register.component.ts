@@ -5,6 +5,8 @@ import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
+import { AuthService } from '../../../services/auth/auth.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-register',
@@ -19,9 +21,8 @@ import { TooltipModule } from 'primeng/tooltip';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-submitRegisterRequest() {
-throw new Error('Method not implemented.');
-}
+  @Output() switchToLogin = new EventEmitter<void>();
+
   loading: boolean = false;
 
   registerForm = new FormGroup({
@@ -31,10 +32,62 @@ throw new Error('Method not implemented.');
     username: new FormControl('', [Validators.required, Validators.pattern("^[a-zA-Z0-9]{5,15}$")]),
     password: new FormControl('', [Validators.required, Validators.pattern("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$")])
   });
+  
+  constructor(
+    private authService: AuthService,
+    private messageService: MessageService
+  ) {}
 
-    @Output() switchToLogin = new EventEmitter<void>();
+  onSignInClick(): void {
+    this.switchToLogin.emit();
+  }
 
-    onSignInClick(): void {
-      this.switchToLogin.emit();
+  isValid(): unknown {
+    return this.registerForm.invalid;
+  }
+
+  submitRegisterRequest() {
+    this.loading = true;
+    if (this.registerForm.invalid) {
+      this.messageService.add({ 
+        severity: 'error', 
+        summary: 'Register Failed', 
+        detail: "Validation failed, please check the fields below!"
+      });
+      this.loading = false;
     }
+
+    this.authService.sendRegisterRequest({
+      username: this.registerForm.controls.username.value ?? '',
+      password: this.registerForm.controls.password.value ?? '',
+      firstName: this.registerForm.controls.firstName.value ?? '',
+      lastName: this.registerForm.controls.lastName.value ?? '',
+      email: this.registerForm.controls.email.value ?? ''
+    }).subscribe({
+      next: (next) => {
+        console.log(next);
+        this.onSignInClick();
+        this.loading = false;
+      },
+      error: (error) => {
+        let message = "";
+        switch(error.status) {
+          case 0:
+            message = "An unexpected error has occurred, please try again later!";
+            break;
+          default:
+            message = error.error.error;
+            break;
+        }
+
+        this.messageService.add({ 
+          severity: 'error', 
+          summary: 'Register Failed', 
+          detail: error.error.error
+        });
+        this.loading = false;
+      }
+    });
+
+  }
 }

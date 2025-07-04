@@ -42,7 +42,10 @@ export class LoginComponent {
   onSignUpClick(): void {
     this.switchToRegister.emit();
   }
-    
+
+  isValid(): unknown {
+    return this.loginForm.invalid;
+  }
 
   submitLoginRequest() {
     this.loading = true
@@ -89,7 +92,6 @@ export class LoginComponent {
           detail: error.error.error
         });
         this.loading=false;
-
       }
     })
   }
