@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 import { AuthService } from '../../../services/auth/auth.service';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-register',
@@ -16,12 +17,14 @@ import { MessageService } from 'primeng/api';
     CommonModule,
     FloatLabelModule,
     InputTextModule,
-    TooltipModule],
+    TooltipModule,
+    ToastModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
   @Output() switchToLogin = new EventEmitter<void>();
+  @Output() registerSuccess = new EventEmitter<void>();
 
   loading: boolean = false;
 
@@ -40,6 +43,10 @@ export class RegisterComponent {
 
   onSignInClick(): void {
     this.switchToLogin.emit();
+  }
+
+  onRegisterSuccess(): void {
+    this.registerSuccess.emit();
   }
 
   isValid(): unknown {
@@ -65,9 +72,14 @@ export class RegisterComponent {
       email: this.registerForm.controls.email.value ?? ''
     }).subscribe({
       next: (next) => {
-        console.log(next);
-        this.onSignInClick();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Registration success',
+          detail: 'You have registered succesfully!',
+        });
         this.loading = false;
+        this.onRegisterSuccess();
+        this.registerForm.reset();
       },
       error: (error) => {
         let message = "";

@@ -5,7 +5,7 @@ import { LoginComponent } from "../forms/login/login.component";
 import { RegisterComponent } from "../forms/register/register.component";
 import { AuthService } from '../../services/auth/auth.service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 
 
 @Component({
@@ -14,7 +14,9 @@ import { Router } from '@angular/router';
     DialogModule, 
     LoginComponent, 
     RegisterComponent,
-    CommonModule],
+    CommonModule,
+    RouterLink,
+    RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
@@ -34,6 +36,11 @@ export class HeaderComponent {
   logout() {
     this.authService.logout();
     this.router.navigate(['']);
+  }
+
+  handleRegisterSuccess() {
+    this.isRegister = false;
+    this.isLogin = false;
   }
 
   handleSwitchToLogin(): void {

@@ -1,6 +1,9 @@
-<div class="flex justify-content-between w-full border-bottom-1 pb-3 pt-1">
+<div class="flex justify-content-between w-full border-bottom-1 pb-3 pt-3 bg-black-alpha-90 left-0 right-0 top-0 fixed  headercomponent">
     <div class="flex justify-content-center align-items-center text-xl ml-3">
         PeopleCompass
+    </div>
+    <div>
+        <p-button [link]="true" [routerLink]="'evaluation-create'">Create evaluation</p-button>
     </div>
     <div class="flex justify-content-end w-10rem px-3" *ngIf="!isLoggedIn()">
         <p-button (onClick)="openLoginModal()" >Log in</p-button>
@@ -15,5 +18,5 @@
 </p-dialog>
 
 <p-dialog [(visible)]="isRegister" [dismissableMask]="true" [draggable]="false"  [style]="{ width: '300px', height: 'auto' }" header="Register">
-    <app-register (switchToLogin)="handleSwitchToLogin()"></app-register>
+    <app-register (switchToLogin)="handleSwitchToLogin()" (registerSuccess)="handleRegisterSuccess()"></app-register>
 </p-dialog>

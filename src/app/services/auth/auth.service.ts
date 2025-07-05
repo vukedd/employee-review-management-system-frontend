@@ -1,18 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../../../globals';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, throwError } from 'rxjs';
 import { loginRequestDto } from '../../models/auth/loginRequestDto';
 import { token } from '../../models/auth/token';
 import { registerRequestDto } from '../../models/auth/registerRequestDto';
+import { RefreshTokenRequest } from '../../models/auth/refreshTokenRequest';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedInSubject = new BehaviorSubject<boolean | null>(null);
-
   constructor(private http: HttpClient) { }
 
   sendLoginRequest(request: loginRequestDto) : Observable<any> {
@@ -24,22 +23,65 @@ export class AuthService {
   }
 
   setTokens(token: token) {
-    if (typeof window !== 'undefined' && window.sessionStorage) {
+    if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.setItem("accessToken", token.accessToken);
       localStorage.setItem("refreshToken", token.refreshToken);
-      this.loggedInSubject.next(true);
     }
   }
 
+  setAccessToken(token: string) {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem("accessToken", token);
+    }
+  }
+
+  getRefreshToken() {
+   if (typeof window !== 'undefined' && window.localStorage) {
+      return localStorage.getItem("refreshToken");
+    }
+    return null;
+  }
+
   isLoggedIn(){
-    return this.loggedInSubject.value === true;
+    if (typeof window !== 'undefined' && window.localStorage) {
+      if (localStorage.getItem("accessToken") != null && 
+        localStorage.getItem("refreshToken") != null) 
+      {
+        return true
+      }
+    }
+
+    return false;
+  }
+
+  refreshToken(): Observable<any> {
+    let refreshToken: any = "";
+    if (typeof window !== 'undefined' && window.localStorage) {
+      refreshToken = localStorage.getItem("refreshToken");
+    } else {
+      return EMPTY;
+    }
+    if (refreshToken == null) {
+      this.logout();
+      return throwError(() => new Error('No refresh token available'));
+    }
+    let body: RefreshTokenRequest = {
+      token: refreshToken
+    };
+    return this.http.post(API_URL + "/auth/refresh", body);
+  }
+
+  getAccessToken() {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return localStorage.getItem("accessToken");
+    }
+    return null;
   }
 
   logout(): void {
     if (typeof window !== 'undefined' && window.sessionStorage) {
-      sessionStorage.removeItem("accessToken");
-      sessionStorage.removeItem("refreshToken");
-      this.loggedInSubject.next(false);
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
     }
   }
 }

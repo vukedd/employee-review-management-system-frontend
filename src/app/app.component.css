@@ -1,0 +1,26 @@
+/* Small screens */
+@media screen and (max-width: 576px) {
+    #main-content {
+        margin-top: 5rem;
+        margin-left: 0.1rem;
+        margin-right: 0.1rem;
+    }
+}
+
+/* Medium screens */
+@media screen and (min-width: 577px) and (max-width: 991px) {
+    #main-content {
+        margin-top: 6rem;
+        margin-left: 3rem;
+        margin-right: 3rem;
+    }
+}
+
+/* Large screens */
+@media screen and (min-width: 992px){
+    #main-content {
+        margin-top: 6rem;
+        margin-left: 7rem;
+        margin-right: 7rem;
+    }
+}

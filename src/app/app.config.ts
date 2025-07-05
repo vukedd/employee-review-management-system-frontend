@@ -5,7 +5,9 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
 import { MessageService } from 'primeng/api';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
+import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
+import { AuthGuard } from './guards/auth.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +19,9 @@ export const appConfig: ApplicationConfig = {
             preset: Aura
         }
     }),
+    provideHttpClient(withInterceptorsFromDi())
+        , { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+        AuthGuard,
     provideHttpClient(withFetch()),
     MessageService
   ]

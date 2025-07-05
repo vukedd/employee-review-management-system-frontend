@@ -1,0 +1,205 @@
+<p-stepper [value]="1" class="basis-[50rem] mt-5">
+  <p-step-list>
+    <p-step [value]="1">Select evaluation type</p-step>
+    <p-step [value]="2">Define questions</p-step>
+    <p-step [value]="3">Review evaluation</p-step>
+  </p-step-list>
+  <p-step-panels>
+    <p-step-panel [value]="1">
+      <ng-template #content let-activateCallback="activateCallback">
+        <div clas="flex justify-content-end">
+          <div class="flex pt-6 justify-content-end">
+            <p-button
+              label="Next"
+              icon="pi pi-arrow-right"
+              iconPos="right"
+              (onClick)="activateCallback(2); assignEvaluationType()"
+            />
+          </div>
+        </div>
+        <div
+          class="flex flex-col h-48 justify-center align-items-center flex-column"
+        >
+          <div>
+            <h1>Select evaluation type:</h1>
+            <p-select
+              placeholder="Select type"
+              class="w-full md:w-56"
+              [options]="evalTypes"
+              [(ngModel)]="selectedEvalType"
+            />
+          </div>
+        </div>
+      </ng-template>
+    </p-step-panel>
+
+    <p-step-panel [value]="2">
+      <ng-template #content let-activateCallback="activateCallback">
+        <div class="justify-content-between">
+          <div class="flex pt-6 justify-content-between">
+            <p-button
+              label="Back"
+              severity="secondary"
+              icon="pi pi-arrow-left"
+              (onClick)="activateCallback(1)"
+            />
+            <p-button
+              label="Next"
+              icon="pi pi-arrow-right"
+              iconPos="right"
+              (onClick)="activateCallback(3)"
+            />
+          </div>
+        </div>
+        <div
+          class="flex flex-col h-48 justify-center align-items-center flex-column"
+        >
+          <div class="card p-4 w-full">
+            <h1 class="font-bold mb-2 mt-6 text-center">Questions</h1>
+
+            <div class="flex flex-column gap-4">
+              <div *ngFor="let question of evaluation.questions; let i = index">
+                <p-card>
+                  <ng-template pTemplate="title">
+                    <div class="flex justify-content-around items-center">
+                      <h2>Question {{ i + 1 }}</h2>
+                      <p-button
+                        icon="pi pi-trash"
+                        styleClass="p-button-danger p-button-text mt-4"
+                        (click)="removeQuestion(i)"
+                        [disabled]="evaluation.questions.length <= 1"
+                      >
+                      </p-button>
+                    </div>
+                  </ng-template>
+
+                  <div
+                    class="flex flex-column lg:flex-row lg:justify-content-around gap-5"
+                  >
+                    <div>
+                      <div>
+                        <h3>Select question type:</h3>
+                        <p-select
+                          placeholder="Select Type"
+                          class="w-full md:w-56"
+                          [options]="questionTypes"
+                          [(ngModel)]="question.type"
+                        />
+                      </div>
+                      <div>
+                        <h3>Select question category:</h3>
+                        <p-select
+                          placeholder="Select Category"
+                          class="w-full md:w-56"
+                          [options]="questionCategories"
+                          [(ngModel)]="question.category"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <h3>Question text:</h3>
+                      <textarea
+                        rows="5"
+                        cols="50"
+                        pTextarea
+                        [autoResize]="true"
+                        [(ngModel)]="question.content"
+                      ></textarea>
+                    </div>
+                  </div>
+                </p-card>
+              </div>
+            </div>
+
+            <div class="flex justify-content-end gap-2 mt-4">
+              <p-button
+                label="Add Another Question"
+                icon="pi pi-plus"
+                (click)="addQuestion()"
+                styleClass="p-button-success"
+              >
+              </p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-step-panel>
+
+    <p-step-panel [value]="3">
+      <ng-template #content let-activateCallback="activateCallback">
+        <div class="justify-content-between">
+          <div class="flex pt-6 justify-content-between">
+            <p-button
+              label="Back"
+              icon="pi pi-arrow-left"
+              iconPos="left"
+              severity="secondary"
+              (onClick)="activateCallback(2)"
+            />
+            <p-button 
+            label="Submit" 
+            (onClick)="submitEvaluation()" 
+            />
+          </div>
+        </div>
+        <div class="card p-4 mt-4">
+          <h2 class="text-xl font-bold mb-4 border-bottom-1 pb-2">
+            Review Your Evaluation
+          </h2>
+
+          <div class="field mb-5">
+            <h3 class="font-semibold text-lg m-0">Evaluation Type</h3>
+            <p class="text-lg p-2 border-round-sm mt-2">
+              {{ selectedEvalType || "Not Selected" }}
+            </p>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-lg m-0">Questions</h3>
+
+            <div
+              *ngIf="evaluation.questions.length === 0"
+              class="mt-2 text-gray-500"
+            >
+              No questions have been added.
+            </div>
+
+            <div class="flex flex-column gap-3 mt-2">
+              <div
+                *ngFor="let question of evaluation.questions; let i = index"
+                class="p-3 border-1 border-gray-200 border-round-md"
+              >
+                <h4 class="font-bold mb-3 text-primary">
+                  Question {{ i + 1 }}
+                </h4>
+
+                <div class="grid p-fluid">
+                  <div class="col-12 md:col-6">
+                    <span class="font-semibold text-sm"
+                      >TYPE</span
+                    >
+                    <p class="m-0">{{ question.type }}</p>
+                  </div>
+                  <div class="col-12 md:col-6">
+                    <span class="font-semibold text-sm"
+                      >CATEGORY</span
+                    >
+                    <p class="m-0">{{ question.category }}</p>
+                  </div>
+                  <div class="col-12 mt-2">
+                    <span class="font-semibold text-sm"
+                      >CONTENT</span
+                    >
+                    <p class="m-0 p-2 border-round-sm mt-1">
+                      {{ question.content }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-step-panel>
+  </p-step-panels>
+</p-stepper>

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './layout/dashboard/dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
+import { CreateEvaluationComponent } from './layout/forms/create-evaluation/create-evaluation.component';
+import { DashboardComponent } from './layout/dashboard/dashboard.component';
 
 export const routes: Routes = [
     {
@@ -9,4 +10,10 @@ export const routes: Routes = [
         title: 'Dashboard',
         canActivate: [AuthGuard]
     },
+    {
+        path: 'evaluation-create',
+        component: CreateEvaluationComponent,
+        title: 'Create evaluation',
+        canActivate: [AuthGuard]
+    }
 ];

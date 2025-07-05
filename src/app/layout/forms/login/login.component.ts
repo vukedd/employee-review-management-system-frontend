@@ -8,6 +8,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ import { MessageService } from 'primeng/api';
     FloatLabelModule,
     InputTextModule,
     TooltipModule,
+    ToastModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
