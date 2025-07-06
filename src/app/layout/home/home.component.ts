@@ -9,7 +9,6 @@ import { EmployeeDashboardComponent } from "../dashboards/employee-dashboard/emp
 })
 export class HomeComponent {
   username: string = "";
-
   constructor() {
     
   }

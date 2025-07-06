@@ -57,7 +57,6 @@ export class HeaderComponent {
     this.isLogin = false;
     this.isRegister = false;
     this.router.navigate(['dashboard']);
-
   }
 
   openLoginModal() {

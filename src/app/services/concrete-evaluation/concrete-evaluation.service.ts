@@ -4,6 +4,7 @@ import { AuthService } from '../auth/auth.service';
 import { jwtDecode } from 'jwt-decode';
 import { API_URL } from '../../../globals';
 import { Observable } from 'rxjs';
+import { SubmitEvaluationDto } from '../../models/evaluation/SubmitEvaluationDto';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,13 @@ export class ConcreteEvaluationService {
     }
 
     return this.http.get(API_URL + "/concreteEvaluation?username=" + username + '&filter=' + filter.toString() + "&teamId=" + teamId);
+  }
+
+  getConcreteEvaluation(id: number) : Observable<any> {
+    return this.http.get(API_URL + '/concreteEvaluation/' + id.toString());
+  }
+
+  submitEvaluation(evaluation: SubmitEvaluationDto) : Observable<any> {
+    return this.http.put(API_URL + "/concreteEvaluation/submit", evaluation);
   }
 }

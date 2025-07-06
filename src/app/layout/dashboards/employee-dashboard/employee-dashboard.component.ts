@@ -7,6 +7,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { CaroselSizeService } from '../../carosel/carosel.service';
 import { AccordionModule } from 'primeng/accordion';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-employee-dashboard',
@@ -14,7 +15,8 @@ import { AccordionModule } from 'primeng/accordion';
     CommonModule,
     CarouselModule,
     ButtonModule,
-    AccordionModule
+    AccordionModule,
+    RouterModule
   ],
   templateUrl: './employee-dashboard.component.html',
   styleUrl: './employee-dashboard.component.css'

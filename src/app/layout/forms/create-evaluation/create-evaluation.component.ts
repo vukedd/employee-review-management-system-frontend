@@ -126,7 +126,7 @@ export class CreateEvaluationComponent {
 
     this.evaluationService.createEvaluation(evaluationRequest).subscribe({
       next: (next) => {
-        this.router.navigate(['']);
+        this.router.navigate(['dashboard']);
         this.messageService.add({
           severity: 'success',
           summary: 'Action success!',
