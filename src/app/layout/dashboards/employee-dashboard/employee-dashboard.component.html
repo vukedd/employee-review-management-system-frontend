@@ -1,0 +1,170 @@
+<p-accordion [multiple]="false">
+  <p-accordion-tab
+    *ngFor="let m of memberships"
+    [header]="m.name + ' hub'"
+    class="text-l md:text-xl"
+  >
+    <div *ngIf="m.isTeamLead != true" class="mb-4 border-round-3xl pt-2">
+      <h2 class="text-center">{{ m.name }} | Developer</h2>
+      <div class="grid">
+        <div class="col-12 lg:col-6">
+          <h2 class="text-white text-center">Pending evaluations</h2>
+          <div
+            class="w-full mb-4 border-round-xl p-3"
+            *ngIf="pendingEvaluations.get(m.teamId)?.length != 0"
+          >
+            <p-carousel
+              [value]="pendingEvaluations.get(m.teamId) ?? []"
+              orientation="horizontal"
+              [numVisible]="1"
+              [numScroll]="1"
+            >
+              <ng-template pTemplate="item" let-evaluation>
+                <div
+                  class="surface-ground shadow-2 border-round-lg p-4 m-2 flex flex-column"
+                >
+                  <div class="border-bottom-1 surface-border pb-3 mb-3">
+                    <h3 class="text-xl font-bold text-900 m-0" *ngIf="evaluation.evaluationType == 0">Self evaluation</h3>
+                    <h3 class="text-xl font-bold text-900 m-0" *ngIf="evaluation.evaluationType == 1">Peer evaluation</h3>
+                    <h3 class="text-xl font-bold text-900 m-0" *ngIf="evaluation.evaluationType == 2">Lead evaluation</h3>
+                  </div>
+
+                  <div class="py-2 flex flex-column gap-3">
+                    <div class="flex justify-content-between">
+                      <span class="text-color-secondary font-medium"
+                        >Status:</span
+                      >
+                      <span class="font-semibold text-orange-300">{{
+                        "Pending"
+                      }}</span>
+                    </div>
+                  </div>
+
+                  <div class="py-2 flex flex-column gap-3">
+                    <div class="flex justify-content-between">
+                      <span class="text-color-secondary font-medium"
+                        >Deadline:</span
+                      >
+                      <span class="font-semibold text-orange-300">
+                        {{ evaluation.deadline }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="py-2 flex flex-column gap-3">
+                    <div class="flex justify-content-between">
+                      <span class="text-color-secondary font-medium"
+                        >Evaluating:</span
+                      >
+                      <span class="font-semibold text-green-500">
+                        {{ evaluation.reviewee.username }}</span
+                      >
+                    </div>
+                  </div>
+                  <div class="mt-auto pt-3 flex justify-content-end gap-2">
+                    <p-button
+                      label="Evaluate"
+                      icon="pi pi-file-edit"
+                      styleClass="p-button-outlined"
+                    ></p-button>
+                  </div>
+                </div>
+              </ng-template>
+            </p-carousel>
+          </div>
+          <div *ngIf="pendingEvaluations.get(m.teamId)?.length == 0">
+            <p class="text-center">
+              There are currently no pending evaluations for this
+            </p>
+          </div>
+        </div>
+
+        <div class="col-12 lg:col-6">
+          <h2 class="text-white text-center">Submitted evaluations</h2>
+          <div
+            class="w-full mb-4 border-round-xl p-3"
+            *ngIf="submittedEvaluations.get(m.teamId)?.length != 0"
+          >
+            <p-carousel
+              [value]="submittedEvaluations.get(m.teamId) ?? []"
+              orientation="horizontal"
+              [numVisible]="1"
+              [numScroll]="1"
+            >
+              <ng-template pTemplate="item" let-evaluation>
+                <div
+                  class="surface-ground shadow-2 border-round-lg p-4 m-2 flex flex-column"
+                >
+                  <div class="border-bottom-1 surface-border pb-3 mb-3">
+                    <h3 class="text-xl font-bold text-900 m-0" *ngIf="evaluation.evaluationType == 0">Self evaluation</h3>
+                    <h3 class="text-xl font-bold text-900 m-0" *ngIf="evaluation.evaluationType == 1">Peer evaluation</h3>
+                    <h3 class="text-xl font-bold text-900 m-0" *ngIf="evaluation.evaluationType == 2">Lead evaluation</h3>
+                  </div>
+
+                  <div class="py-2 flex flex-column gap-3">
+                    <div class="flex justify-content-between">
+                      <span class="text-color-secondary font-medium"
+                        >Status:</span
+                      >
+                      <span class="font-semibold text-green-500">
+                        {{ "Completed" }}</span
+                      >
+                    </div>
+                  </div>
+
+                  <div class="py-2 flex flex-column gap-3">
+                    <div class="flex justify-content-between">
+                      <span class="text-color-secondary font-medium"
+                        >Deadline:</span
+                      >
+                      <span class="font-semibold text-orange-300">
+                        {{ evaluation.deadline }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="py-2 flex flex-column gap-3">
+                    <div class="flex justify-content-between">
+                      <span class="text-color-secondary font-medium"
+                        >Evaluating:</span
+                      >
+                      <span class="font-semibold text-green-500">
+                        {{ evaluation.reviewee.username }}</span
+                      >
+                    </div>
+                  </div>
+                  <div class="mt-auto pt-3 flex justify-content-end gap-2">
+                    <p-button
+                      label="View Report"
+                      icon="pi pi-chart-bar"
+                      styleClass="p-button-outlined"
+                    ></p-button>
+                    <p-button
+                      label="Edit"
+                      icon="pi pi-file-edit"
+                      styleClass="p-button-outlined"
+                      *ngIf="evaluation.evaluationType == 0"
+                    ></p-button>
+                  </div>
+                </div>
+              </ng-template>
+            </p-carousel>
+          </div>
+          <div *ngIf="submittedEvaluations.get(m.teamId)?.length == 0">
+            <p class="text-center">
+              Hey, it seems like you haven't submitted any evaluations! You should probably
+              check your pending evaluations! :D
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="m.isTeamLead == true"
+        class="w-full h-auto flex justify-content-center bg-gray-700 mb-4"
+      >
+        <h2 class="text-white">{{ m.name }} | Role: Team Lead</h2>
+      </div>
+    </div>
+  </p-accordion-tab>
+</p-accordion>
