@@ -12,14 +12,14 @@ export class MembershipService {
   constructor(public http: HttpClient, public authService: AuthService) { }
 
   public getMembershipsByUsername() : Observable<any> {
-    const token = this.authService.getAccessToken();
-    let username: string | undefined = "";
-    let decoded: any;
-    if (token != null) { 
-      decoded = jwtDecode(token);
-      username = decoded["unique_name"];
-    }
+    let username = this.authService.getUsername();
 
     return this.http.get(API_URL + "/membership/" + username);
+  }
+
+  public getTeammatesByUsername() : Observable<any> {
+    let username = this.authService.getUsername();
+    
+    return this.http.get(API_URL + "/membership/collegues/" + username);
   }
 }

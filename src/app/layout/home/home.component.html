@@ -36,8 +36,8 @@
           </div>
         </ng-template>
         <p class="m-0 px-3 pb-3 line-height-3 text-700 p-break-all">
-          {{feedback.content}}
-    </p>
+          {{ feedback?.content }}
+        </p>
       </p-card>
       <div class="flex justify-content-center mt-3">
         <p-button
@@ -50,14 +50,58 @@
     </div>
   </div>
 </div>
-  <p-divider />
+<p-divider />
 
-  <div
-    class="text-center flex align-items-center justify-content-center flex flex-column mb-4"
+<div
+  class="text-center flex align-items-center justify-content-center flex flex-column mb-4"
+>
+  <h1 class="text-4xl font-bold mt-4 text-primary">
+    Want to recognize or give constructive feedback to a teammate? Share it now.
+  </h1>
+  <p-button class="my-4" (onClick)="initFeedbackModal()"
+    >Leave feedback</p-button
   >
-    <h1 class="text-4xl font-bold mt-4 text-primary ">
-      Want to recognize or give constructive feedback to a teammate? Share it now.   
-    </h1>
-    <p-button class="my-4" (onClick)="visible = true">Leave feedback</p-button>
-  </div>
+</div>
 <app-employee-dashboard></app-employee-dashboard>
+
+<p-dialog
+  header="Provide feedback to a teammate"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '25rem', height: '25rem' }"
+>
+  <div class="flex justify-end gap-2 mb-3 flex-column">
+    <label for="colleague-input">Select collegue:</label>
+    <p-select
+      [options]="teammates"
+      [(ngModel)]="selectedTeammate"
+      placeholder="Select a teammate"
+      class="w-full md:w-56"
+      id="colleague-input"
+    />
+  </div>
+  <div class="flex justify-end gap-2 mb-3 flex-column">
+    <label for="privacy-input">Set privacy:</label>
+    <p-select
+      [options]="privacyOptions"
+      optionLabel="privacy"
+      [(ngModel)]="selectedPrivacyOption"
+      placeholder=""
+      class="w-full md:w-56"
+      id="privacy-input"
+    />
+  </div>
+  <div class="flex justify-end flex-column mb-3">
+    <label for="feedback-input">Enter feedback:</label>
+    <textarea
+      rows="5"
+      cols="30"
+      pTextarea
+      [(ngModel)]="feedbackInput"
+      id="feedback-input"
+    ></textarea>
+  </div>
+  <div class="flex justify-content-center">
+    <p-button (onClick)="submitFeedback()">Submit</p-button>
+  </div>
+</p-dialog>
