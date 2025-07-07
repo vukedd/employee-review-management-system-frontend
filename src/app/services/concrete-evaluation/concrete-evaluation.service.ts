@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { jwtDecode } from 'jwt-decode';
 import { API_URL } from '../../../globals';
 import { Observable } from 'rxjs';
 import { SubmitEvaluationDto } from '../../models/evaluation/SubmitEvaluationDto';

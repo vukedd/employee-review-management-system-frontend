@@ -4,6 +4,8 @@
     </div>
     <div>
         <p-button [link]="true" [routerLink]="'evaluation-create'">Create evaluation</p-button>
+        <p-button [link]="true" [routerLink]="'dashboard'">Dashboard</p-button>
+
     </div>
     <div class="flex justify-content-end w-10rem px-3" *ngIf="!isLoggedIn()">
         <p-button (onClick)="openLoginModal()" >Log in</p-button>

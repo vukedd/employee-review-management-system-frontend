@@ -1,0 +1,26 @@
+<h1 class="text-center text-primary mt-3 lg:mt-5">Received feedbacks</h1>
+<div class="grid">
+  <div *ngFor="let feedback of feedbackList" class="col-12 lg:col-6">
+    <p-card styleClass="feedback-card">
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-3 p-3">
+          <div class="flex flex-column">
+            <span class="font-bold text-lg" *ngIf="feedback?.visibility == 1">
+              {{ feedback.reviewer.username }}
+            </span>
+            <span *ngIf="feedback?.visibility == 0">
+              <span class="font-bold text-lg text-gray-300"
+                >Private user </span
+              ><span class="pi pi-lock text-gray-300"></span>
+            </span>
+            <span class="text-sm text-600">{{ feedback.submissionTimestamp }}</span>
+          </div>
+        </div>
+      </ng-template>
+
+        <p class="m-0 p-px-3 p-pb-3 line-height-3 text-700 p-break-all">
+          {{ feedback.content }}
+        </p> 
+    </p-card>
+  </div>
+</div>
