@@ -43,6 +43,23 @@ export class AuthService {
     return null;
   }
 
+  getUserRole() {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const token = this.getAccessToken();
+      let role: string | undefined = "";
+      let decoded: any;
+
+      if (token != null) { 
+        decoded = jwtDecode(token);
+        role = decoded["role"];
+      }
+
+      return role;
+    }
+
+    return undefined;
+  }
+
   isLoggedIn(){
     if (typeof window !== 'undefined' && window.localStorage) {
       if (localStorage.getItem("accessToken") != null && 
@@ -95,6 +112,7 @@ export class AuthService {
       if (token != null) { 
         decoded = jwtDecode(token);
         username = decoded["unique_name"];
+        console.log(decoded);
       }
 
       return username;

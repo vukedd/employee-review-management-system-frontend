@@ -53,7 +53,7 @@ export class HomeComponent {
     private concreteEvaluationService: ConcreteEvaluationService,
     private feedbackService: FeedbackService,
     private membershipService: MembershipService,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {
     this.username = authService.getUsername() ?? 'User';
 
@@ -118,5 +118,9 @@ export class HomeComponent {
         });
       }
     });
+  }
+
+  getRole() {
+    return this.authService.getUserRole();
   }
 }

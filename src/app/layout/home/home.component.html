@@ -7,19 +7,19 @@
     <h1 class="text-4xl font-light m-0">
       Welcome back, <span class="font-bold text-primary">{{ username }}!</span>
     </h1>
-    <p class="text-color-secondary mt-2 mb-8">
+    <p class="text-color-secondary mt-2 mb-8" *ngIf="getRole() == 'EMPLOYEE'">
       You have
       <span class="font-bold text-primary">{{ pendingEvaluationCount }}</span>
       pending evaluations.
     </p>
   </div>
-  <p-divider />
-  <div class="flex flex-column justify-content-center align-content-center">
+  <p-divider *ngIf="getRole() == 'EMPLOYEE'"/>
+  <div class="flex flex-column justify-content-center align-content-center" *ngIf="getRole() == 'EMPLOYEE'">
     <div class="flex justify-content-center align-items-center">
       <h2 class="text-primary">Feedbacks</h2>
     </div>
-    <div class="px-0 lg:px-8">
-      <p-card styleClass="feedback-card lg:mx-8">
+    <div class="px-0 lg:px-8" *ngIf="getRole() == 'EMPLOYEE'">
+      <p-card styleClass="feedback-card lg:mx-8 bg-black-alpha-90 border-1 border-primary">
         <ng-template pTemplate="header">
           <div class="flex align-items-center gap-3 p-3">
             <div class="flex flex-column">
@@ -53,7 +53,8 @@
 <p-divider />
 
 <div
-  class="text-center flex align-items-center justify-content-center flex flex-column mb-4"
+  class="text-center flex align-items-center justify-content-center flex flex-column mb-4" 
+  *ngIf="getRole() == 'EMPLOYEE'"
 >
   <h1 class="text-4xl font-bold mt-4 text-primary">
     Want to recognize or give constructive feedback to a teammate? Share it now.
@@ -62,16 +63,19 @@
     >Leave feedback</p-button
   >
 </div>
-<app-employee-dashboard></app-employee-dashboard>
 
+
+<app-employee-dashboard *ngIf="getRole() == 'EMPLOYEE'"></app-employee-dashboard>
+
+<!-- Feedback modal -->
 <p-dialog
   header="Provide feedback to a teammate"
   [modal]="true"
   [(visible)]="visible"
-  [style]="{ width: '25rem', height: '25rem' }"
+  [style]="{ width: '25rem', height: '30rem' }"
 >
   <div class="flex justify-end gap-2 mb-3 flex-column">
-    <label for="colleague-input">Select collegue:</label>
+    <label for="colleague-input">Select teammate:</label>
     <p-select
       [options]="teammates"
       [(ngModel)]="selectedTeammate"
@@ -99,6 +103,7 @@
       pTextarea
       [(ngModel)]="feedbackInput"
       id="feedback-input"
+
     ></textarea>
   </div>
   <div class="flex justify-content-center">

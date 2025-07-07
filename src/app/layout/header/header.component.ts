@@ -66,4 +66,8 @@ export class HeaderComponent {
   openRegisterModal(){
     this.isRegister = true;
   }
+
+  getRole() {
+    return this.authService.getUserRole();
+  }
 }

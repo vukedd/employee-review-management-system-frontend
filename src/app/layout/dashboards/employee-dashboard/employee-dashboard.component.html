@@ -1,4 +1,6 @@
 <p-accordion [multiple]="false">
+  
+  <!-- Employee accordion tab -->
   <p-accordion-tab
     *ngFor="let m of memberships"
     [header]="m.name + ' hub'"
@@ -160,6 +162,7 @@
         </div>
       </div>
 
+      <!-- Team lead accordion tab -->
       <div
         *ngIf="m.isTeamLead == true"
         class="w-full h-auto flex justify-content-center bg-gray-700 mb-4"

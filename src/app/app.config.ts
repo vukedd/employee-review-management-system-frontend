@@ -7,7 +7,7 @@ import { routes } from './app.routes';
 import { MessageService } from 'primeng/api';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from './guards/auth/auth.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [
