@@ -11,7 +11,7 @@
       *ngFor="let question of responses; let i = index"
       class="flex flex-column"
     >
-      <div class="text-3xl">{{ i + 1 + "." }} {{ question.question }}</div>
+      <div class="text-3xl mb-2">{{ i + 1 + "." }} {{ question.question }}</div>
       <textarea
         rows="5"
         cols="50"
@@ -21,24 +21,24 @@
         [(ngModel)]="question.content"
         class="mb-4"
       ></textarea>
-      <div class="flex flex-wrap gap-4 mb-4 mt-3" *ngIf="question.type == 0">
+      <div class="flex flex-wrap gap-4 mb-4 mt-2" *ngIf="question.type == 0">
         <div
           *ngFor="let optionValue of [1, 2, 3, 4, 5]"
           class="flex align-items-center"
         >
           <input
             type="radio"
-            [(ngModel)]="question.content"
             [name]="question.id"
             [value]="optionValue"
+            [(ngModel)]="question.content"
             id="{{ question.id }} + '-' + {{ optionValue }}"
           />
 
-          <label
-            for="{{ question.id }} + '-' + {{ optionValue }}"
+            <label
+            [for]="question.id + '-' + optionValue"
             class="ml-2"
             >{{ optionValue }}</label
-          >
+            >
         </div>
       </div>
     </div>

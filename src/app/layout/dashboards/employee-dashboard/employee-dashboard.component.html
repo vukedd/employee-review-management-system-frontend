@@ -138,8 +138,7 @@
                   </div>
                   <div class="mt-auto pt-3 flex justify-content-end gap-2">
                     <p-button
-                      label="View Report"
-                      icon="pi pi-chart-bar"
+                      label="View evaluation"
                       styleClass="p-button-outlined"
                     ></p-button>
                     <p-button
@@ -163,13 +162,12 @@
         </div>
       </div>
 
-      <!-- Team lead accordion tab -->
-      <div
+    </div>
+          <div
         *ngIf="m.isTeamLead == true"
-        class="w-full h-auto flex justify-content-center bg-gray-700 mb-4"
+        class="w-full h-auto flex justify-content-center mb-4"
       >
         <h2 class="text-white">{{ m.name }} | Role: Team Lead</h2>
       </div>
-    </div>
   </p-accordion-tab>
 </p-accordion>

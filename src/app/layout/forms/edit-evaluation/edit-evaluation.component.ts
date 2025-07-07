@@ -10,10 +10,11 @@ import { TextareaModule } from 'primeng/textarea';
 import { ToastModule } from 'primeng/toast';
 import { ConcreteEvaluationService } from '../../../services/concrete-evaluation/concrete-evaluation.service';
 import { ToastsPositionService } from '../../toasts/toasts.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-edit-evaluation',
-  imports: [    
+  imports: [
     CommonModule,
     CardModule,
     RadioButtonModule,
@@ -21,81 +22,97 @@ import { ToastsPositionService } from '../../toasts/toasts.service';
     TextareaModule,
     ButtonModule,
     ToastModule,
-    RouterModule],
+    RouterModule,
+  ],
   templateUrl: './edit-evaluation.component.html',
-  styleUrl: './edit-evaluation.component.css'
+  styleUrl: './edit-evaluation.component.css',
 })
 export class EditEvaluationComponent {
-  public responses: any[] = []
-  public reviewee: string = "";
+  public responses: any[] = [];
+  public reviewee: string = '';
   public evaluation: any;
-
 
   constructor(
     public route: ActivatedRoute,
     private concreteEvaluationService: ConcreteEvaluationService,
     private messageService: MessageService,
     private router: Router,
-    public toastPositionService: ToastsPositionService
+    public toastPositionService: ToastsPositionService,
+    private authService: AuthService
   ) {
-    concreteEvaluationService.getConcreteEvaluation(this.route.snapshot.params["id"]).subscribe({
-      next: (next) => {
-        if(next.evaluationType == 0){
-          this.router.navigate(['/dashboard']);
-        }
-        this.evaluation = next
-        this.reviewee = next.reviewee.username
-        this.responses = next.responses
-
-        for (let i = 0; i < this.responses.length; i ++) {
-          if(this.responses[i].type == 0) {
-            this.responses[i].content = 5
+    concreteEvaluationService
+      .getConcreteEvaluation(this.route.snapshot.params['id'])
+      .subscribe({
+        next: (next) => {
+          if (next.evaluationType == 0) {
+            this.router.navigate(['/dashboard']);
           }
-        }
 
-      }, error: (error) => {
+          if (next.reviewer.username != this.authService.getUsername()) {
+            this.router.navigate(['/dashboard']);
+          }
+
+          this.evaluation = next;
+          this.reviewee = next.reviewee.username;
+          this.responses = next.responses;
+
+          for (let i = 0; i < this.responses.length; i++) {
+            if (this.responses[i].type == 0) {
+              this.responses[i].content = Number(this.responses[i].content);
+            }
+          }
+        },
+        error: (error) => {
           this.router.navigate(['/dashboard']);
-      }
-    })
+          this.messageService.add({
+            severity: 'error',
+            detail: 'Evaluation not found!',
+            summary: 'Not found',
+          });
+        },
+      });
   }
 
-    submitForm() {
-    for (let i = 0; i < this.evaluation.responses.length; i ++) {
+  submitForm() {
+    for (let i = 0; i < this.evaluation.responses.length; i++) {
       let response: string = this.evaluation.responses[i].content;
-      if (this.evaluation.responses[i].type != 0 && response.trim() == "") {
+      if (this.evaluation.responses[i].type != 0 && response.trim() == '') {
         this.messageService.add({
           severity: 'error',
           summary: 'Invalid evaluation answer',
-          detail: 'Please check all fields before submitting.'
+          detail: 'Please check all fields before submitting.',
         });
-        return
+        return;
       }
     }
 
-    for (let i = 0; i < this.evaluation.responses.length; i ++) {
+    for (let i = 0; i < this.evaluation.responses.length; i++) {
       if (this.evaluation.responses[i].type == 0) {
-        this.evaluation.responses[i].content = this.evaluation.responses[i].content.toString();
+        this.evaluation.responses[i].content =
+          this.evaluation.responses[i].content.toString();
         continue;
       }
 
-      this.evaluation.responses[i].content = this.evaluation.responses[i].content.trim();
+      this.evaluation.responses[i].content =
+        this.evaluation.responses[i].content.trim();
     }
-    
+
     this.concreteEvaluationService.submitEvaluation(this.evaluation).subscribe({
       next: (next) => {
         this.messageService.add({
           severity: 'success',
           detail: 'Evaluation successfully submitted!',
-          summary: 'Evaluation success'
-        })
-        this.router.navigate(['dashboard'])
-      }, error: (error) => {
+          summary: 'Evaluation success',
+        });
+        this.router.navigate(['dashboard']);
+      },
+      error: (error) => {
         this.messageService.add({
           severity: 'error',
           detail: 'Please, try again later!',
-          summary: 'An unexpected error occurred'
-        })
-      }
-    })
+          summary: 'An unexpected error occurred',
+        });
+      },
+    });
   }
 }

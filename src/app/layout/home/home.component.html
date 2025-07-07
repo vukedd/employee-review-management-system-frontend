@@ -51,7 +51,7 @@
           <p-button
             class="text-primary"
             variant="outlined"
-            [routerLink]="['/feedback', username]"
+            [routerLink]="['/feedback']"
             >Show all</p-button
           >
         </div>
@@ -97,7 +97,7 @@
       [options]="privacyOptions"
       optionLabel="privacy"
       [(ngModel)]="selectedPrivacyOption"
-      placeholder=""
+      placeholder="Privacy"
       class="w-full md:w-56"
       id="privacy-input"
     />

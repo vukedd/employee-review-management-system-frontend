@@ -11,6 +11,7 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { SubmitEvaluationDto } from '../../../models/evaluation/SubmitEvaluationDto';
 import { ToastsPositionService } from '../../toasts/toasts.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 
 @Component({
@@ -38,10 +39,14 @@ export class EvaluateComponent {
     private concreteEvaluationService: ConcreteEvaluationService,
     private messageService: MessageService,
     private router: Router,
-    public toastPositionService: ToastsPositionService
+    public toastPositionService: ToastsPositionService,
+    private authService: AuthService
   ) {
     concreteEvaluationService.getConcreteEvaluation(this.route.snapshot.params["id"]).subscribe({
       next: (next) => {
+          if (next.reviewer.username != this.authService.getUsername()) {
+            this.router.navigate(['/dashboard']);
+          }
         this.evaluation = next
         this.reviewee = next.reviewee.username
         this.responses = next.responses
