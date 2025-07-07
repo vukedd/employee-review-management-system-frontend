@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../../../globals';
-import { BehaviorSubject, EMPTY, Observable, throwError } from 'rxjs';
+import { EMPTY, Observable, throwError } from 'rxjs';
 import { loginRequestDto } from '../../models/auth/loginRequestDto';
 import { token } from '../../models/auth/token';
 import { registerRequestDto } from '../../models/auth/registerRequestDto';
 import { RefreshTokenRequest } from '../../models/auth/refreshTokenRequest';
+import { jwtDecode } from 'jwt-decode';
 
 
 @Injectable({
@@ -83,5 +84,22 @@ export class AuthService {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
     }
+  }
+
+  getUsername(): string | null | undefined {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const token = this.getAccessToken();
+      let username: string | undefined = "";
+      let decoded: any;
+
+      if (token != null) { 
+        decoded = jwtDecode(token);
+        username = decoded["unique_name"];
+      }
+
+      return username;
+    }
+
+    return null;
   }
 }

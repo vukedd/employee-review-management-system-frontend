@@ -16,15 +16,7 @@ export class ConcreteEvaluationService {
   ) { }
 
   getConcreteEvaluations(filter: number, teamId: number) : Observable<any> {
-    const token = this.authService.getAccessToken();
-    let username: string | undefined = "";
-    let decoded: any;
-
-    if (token != null) { 
-      decoded = jwtDecode(token);
-      username = decoded["unique_name"];
-    }
-
+    let username: string | undefined | null = this.authService.getUsername()
     return this.http.get(API_URL + "/concreteEvaluation?username=" + username + '&filter=' + filter.toString() + "&teamId=" + teamId);
   }
 
@@ -34,5 +26,10 @@ export class ConcreteEvaluationService {
 
   submitEvaluation(evaluation: SubmitEvaluationDto) : Observable<any> {
     return this.http.put(API_URL + "/concreteEvaluation/submit", evaluation);
+  }
+
+  getPendingEvaluationCountByUsername() {
+    let username: string | undefined | null = this.authService.getUsername()
+    return this.http.get(API_URL + "/concreteEvaluation/count/" + username);
   }
 }
