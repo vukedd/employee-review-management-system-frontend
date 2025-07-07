@@ -68,7 +68,7 @@
                       label="Evaluate"
                       icon="pi pi-file-edit"
                       styleClass="p-button-outlined"
-                      [routerLink]="['/evaluate', evaluation.id]"  
+                      [routerLink]="['/evaluation', evaluation.id]"  
                     ></p-button>
                   </div>
                 </div>
@@ -147,6 +147,7 @@
                       icon="pi pi-file-edit"
                       styleClass="p-button-outlined"
                       *ngIf="evaluation.evaluationType == 0"
+                      [routerLink]="['/evaluation/edit', evaluation.id]"  
                     ></p-button>
                   </div>
                 </div>

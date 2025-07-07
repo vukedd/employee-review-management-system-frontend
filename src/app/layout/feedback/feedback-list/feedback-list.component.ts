@@ -15,7 +15,9 @@ import { FeedbackService } from '../../../services/feedback/feedback.service';
 export class FeedbackListComponent {
   public feedbackList: any | any[];
 
-  constructor(public feedbackService: FeedbackService) {
+  constructor(
+    public feedbackService: FeedbackService
+  ) {
     feedbackService.getFeedbackList().subscribe({
       next: (next) => {
         this.feedbackList = next;

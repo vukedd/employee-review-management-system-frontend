@@ -5,6 +5,7 @@ import { EvaluateComponent } from './layout/forms/evaluate/evaluate.component';
 import { FeedbackListComponent } from './layout/feedback/feedback-list/feedback-list.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { roleGuard } from './guards/role/role.guard';
+import { EditEvaluationComponent } from './layout/forms/edit-evaluation/edit-evaluation.component';
 
 export const routes: Routes = [
   {
@@ -23,7 +24,7 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'evaluate/:id',
+    path: 'evaluation/:id',
     component: EvaluateComponent,
     title: 'Evaluate',
     canActivate: [AuthGuard, roleGuard],
@@ -32,7 +33,7 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'feedback/:username',
+    path: 'feedback',
     component: FeedbackListComponent,
     title: 'Feedbacks',
     canActivate: [AuthGuard, roleGuard],
@@ -40,4 +41,13 @@ export const routes: Routes = [
       expectedRole: 'EMPLOYEE',
     },
   },
+  {
+    path: 'evaluation/edit/:id',
+    component: EditEvaluationComponent,
+    title: 'Edit evaluation',
+    canActivate: [AuthGuard, roleGuard],
+    data: {
+      expectedRole: 'EMPLOYEE',
+    },
+  }
 ];

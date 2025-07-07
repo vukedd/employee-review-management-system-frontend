@@ -1,21 +1,19 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule }from '@angular/router'
-import { ConcreteEvaluationService } from '../../../services/concrete-evaluation/concrete-evaluation.service';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { FormsModule } from '@angular/forms';
 import { TextareaModule } from 'primeng/textarea';
-import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { SubmitEvaluationDto } from '../../../models/evaluation/SubmitEvaluationDto';
+import { ConcreteEvaluationService } from '../../../services/concrete-evaluation/concrete-evaluation.service';
 import { ToastsPositionService } from '../../toasts/toasts.service';
 
-
 @Component({
-  selector: 'app-evaluate',
-  imports: [
+  selector: 'app-edit-evaluation',
+  imports: [    
     CommonModule,
     CardModule,
     RadioButtonModule,
@@ -23,15 +21,15 @@ import { ToastsPositionService } from '../../toasts/toasts.service';
     TextareaModule,
     ButtonModule,
     ToastModule,
-    RouterModule
-  ],
-  templateUrl: './evaluate.component.html',
-  styleUrl: './evaluate.component.css'
+    RouterModule],
+  templateUrl: './edit-evaluation.component.html',
+  styleUrl: './edit-evaluation.component.css'
 })
-export class EvaluateComponent {
+export class EditEvaluationComponent {
   public responses: any[] = []
   public reviewee: string = "";
   public evaluation: any;
+
 
   constructor(
     public route: ActivatedRoute,
@@ -42,6 +40,9 @@ export class EvaluateComponent {
   ) {
     concreteEvaluationService.getConcreteEvaluation(this.route.snapshot.params["id"]).subscribe({
       next: (next) => {
+        if(next.evaluationType == 0){
+          this.router.navigate(['/dashboard']);
+        }
         this.evaluation = next
         this.reviewee = next.reviewee.username
         this.responses = next.responses
@@ -53,17 +54,12 @@ export class EvaluateComponent {
         }
 
       }, error: (error) => {
-        this.router.navigate(['/dashboard']);
-        this.messageService.add({
-          severity: "error",
-          detail: "Evaluation not found!",
-          summary: "Not found"
-        })
+          this.router.navigate(['/dashboard']);
       }
     })
   }
 
-  submitForm() {
+    submitForm() {
     for (let i = 0; i < this.evaluation.responses.length; i ++) {
       let response: string = this.evaluation.responses[i].content;
       if (this.evaluation.responses[i].type != 0 && response.trim() == "") {

@@ -1,0 +1,50 @@
+<div class="flex justify-content-center flex-column">
+  <div class="flex justify-content-between align-items-center">
+    <p-button  label="Back" icon="pi pi-arrow-left" iconPos="left" [routerLink]="'/dashboard'"></p-button>
+    <h1 class="text-center">
+      Evaluating teammate: <span class="text-primary"> {{ reviewee }}</span>
+    </h1>
+    <div></div>
+  </div>
+  <p-card class="text-xl p-3">
+    <div
+      *ngFor="let question of responses; let i = index"
+      class="flex flex-column"
+    >
+      <div class="text-3xl">{{ i + 1 + "." }} {{ question.question }}</div>
+      <textarea
+        rows="5"
+        cols="50"
+        pTextarea
+        [autoResize]="true"
+        *ngIf="question.type == 1"
+        [(ngModel)]="question.content"
+        class="mb-4"
+      ></textarea>
+      <div class="flex flex-wrap gap-4 mb-4 mt-3" *ngIf="question.type == 0">
+        <div
+          *ngFor="let optionValue of [1, 2, 3, 4, 5]"
+          class="flex align-items-center"
+        >
+          <input
+            type="radio"
+            [(ngModel)]="question.content"
+            [name]="question.id"
+            [value]="optionValue"
+            id="{{ question.id }} + '-' + {{ optionValue }}"
+          />
+
+          <label
+            for="{{ question.id }} + '-' + {{ optionValue }}"
+            class="ml-2"
+            >{{ optionValue }}</label
+          >
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-content-center">
+      <p-button (onClick)="submitForm()">Submit</p-button>
+    </div>
+  </p-card>
+</div>
+<p-toast [position]="toastPositionService.getPosition()"></p-toast>
