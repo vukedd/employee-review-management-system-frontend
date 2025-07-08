@@ -1,12 +1,11 @@
 <p-accordion [multiple]="false">
-  
-  <!-- Employee accordion tab -->
   <p-accordion-tab
     *ngFor="let m of memberships"
     [header]="m.name + ' hub'"
     class="text-l md:text-xl"
   >
-    <div *ngIf="m.isTeamLead != true" class="mb-4 border-round-3xl pt-2">
+  <!-- EMPLOYEEEEEEEEEEEEEEE SECTION -->  
+  <div *ngIf="m.isTeamLead != true" class="mb-4 border-round-3xl pt-2">
       <h2 class="text-center">{{ m.name }} | Developer</h2>
       <div class="grid">
         <div class="col-12 lg:col-6">
@@ -26,9 +25,24 @@
                   class="surface-ground shadow-2 border-round-lg p-4 m-2 flex flex-column"
                 >
                   <div class="border-bottom-1 surface-border pb-3 mb-3">
-                    <h3 class="text-xl font-bold text-900 m-0" *ngIf="evaluation.evaluationType == 0">Self evaluation</h3>
-                    <h3 class="text-xl font-bold text-900 m-0" *ngIf="evaluation.evaluationType == 1">Peer evaluation</h3>
-                    <h3 class="text-xl font-bold text-900 m-0" *ngIf="evaluation.evaluationType == 2">Lead evaluation</h3>
+                    <h3
+                      class="text-xl font-bold text-900 m-0"
+                      *ngIf="evaluation.evaluationType == 0"
+                    >
+                      Self evaluation
+                    </h3>
+                    <h3
+                      class="text-xl font-bold text-900 m-0"
+                      *ngIf="evaluation.evaluationType == 1"
+                    >
+                      Peer evaluation
+                    </h3>
+                    <h3
+                      class="text-xl font-bold text-900 m-0"
+                      *ngIf="evaluation.evaluationType == 2"
+                    >
+                      Lead evaluation
+                    </h3>
                   </div>
 
                   <div class="py-2 flex flex-column gap-3">
@@ -68,7 +82,7 @@
                       label="Evaluate"
                       icon="pi pi-file-edit"
                       styleClass="p-button-outlined"
-                      [routerLink]="['/evaluation', evaluation.id]"  
+                      [routerLink]="['/evaluation', evaluation.id]"
                     ></p-button>
                   </div>
                 </div>
@@ -99,9 +113,24 @@
                   class="surface-ground shadow-2 border-round-lg p-4 m-2 flex flex-column"
                 >
                   <div class="border-bottom-1 surface-border pb-3 mb-3">
-                    <h3 class="text-xl font-bold text-900 m-0" *ngIf="evaluation.evaluationType == 0">Self evaluation</h3>
-                    <h3 class="text-xl font-bold text-900 m-0" *ngIf="evaluation.evaluationType == 1">Peer evaluation</h3>
-                    <h3 class="text-xl font-bold text-900 m-0" *ngIf="evaluation.evaluationType == 2">Lead evaluation</h3>
+                    <h3
+                      class="text-xl font-bold text-900 m-0"
+                      *ngIf="evaluation.evaluationType == 0"
+                    >
+                      Self evaluation
+                    </h3>
+                    <h3
+                      class="text-xl font-bold text-900 m-0"
+                      *ngIf="evaluation.evaluationType == 1"
+                    >
+                      Peer evaluation
+                    </h3>
+                    <h3
+                      class="text-xl font-bold text-900 m-0"
+                      *ngIf="evaluation.evaluationType == 2"
+                    >
+                      Lead evaluation
+                    </h3>
                   </div>
 
                   <div class="py-2 flex flex-column gap-3">
@@ -140,7 +169,7 @@
                     <p-button
                       label="View evaluation"
                       styleClass="p-button-outlined"
-                      [routerLink]="['/evaluation', evaluation.id]"  
+                      [routerLink]="['/evaluation', evaluation.id]"
                     ></p-button>
                   </div>
                 </div>
@@ -149,19 +178,30 @@
           </div>
           <div *ngIf="submittedEvaluations.get(m.teamId)?.length == 0">
             <p class="text-center">
-              Hey, it seems like you haven't submitted any evaluations! You should probably
-              check your pending evaluations! :D
+              Hey, it seems like you haven't submitted any evaluations! You
+              should probably check your pending evaluations! :D
             </p>
           </div>
         </div>
       </div>
-
     </div>
-          <div
-        *ngIf="m.isTeamLead == true"
-        class="w-full h-auto flex justify-content-center mb-4"
-      >
-        <h2 class="text-white">{{ m.name }} | Role: Team Lead</h2>
+
+
+    <!-- TEAAAAAAAAAAAAAAAAM LEEEEEEEEEEEEEEEEEEEEAD SECTION-->
+    <div
+      *ngIf="m.isTeamLead == true"
+      class="w-full h-auto flex justify-content-center mb-4 flex-column align-items-center"
+    >
+      <h2 class="text-white">{{ m.name }} | Role: Team Lead</h2>
+      <div class="grid flex flex-row align-content-center justify-content-center">
+        <div class="col-12 lg:col-6 flex justify-content-center align-content-center flex-column">
+          <h2 class="text-center">Team Hieararchy</h2>
+          <div class="flex justify-content-center align-content-center">
+            <p-organization-chart [value]="hierarchyData.get(m.teamId)" selectionMode="single"></p-organization-chart>
+          </div>
+        </div>
+
       </div>
+    </div>
   </p-accordion-tab>
 </p-accordion>

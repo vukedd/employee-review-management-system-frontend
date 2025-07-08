@@ -16,4 +16,8 @@ export class TeamService {
   getTeamById(id: number) : Observable<any> {
     return this.http.get(API_URL + "/team/" + id.toString());
   }
+  
+  getTeamHieararchy(teamId: number) : Observable<any> {
+    return this.http.get(API_URL + "/team/hierarchy/" + teamId.toString());
+  }
 }
