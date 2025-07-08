@@ -47,7 +47,6 @@ export class EditEvaluationComponent {
           if (next.evaluationType == 0) {
             this.router.navigate(['/dashboard']);
           }
-
           if (next.reviewer.username != this.authService.getUsername()) {
             this.router.navigate(['/dashboard']);
           }

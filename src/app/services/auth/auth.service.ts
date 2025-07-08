@@ -112,7 +112,6 @@ export class AuthService {
       if (token != null) { 
         decoded = jwtDecode(token);
         username = decoded["unique_name"];
-        console.log(decoded);
       }
 
       return username;

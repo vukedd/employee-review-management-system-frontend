@@ -2,7 +2,7 @@
     <div class="flex justify-content-center align-items-center text-xl ml-3">
         AppName
     </div>
-    <div *ngIf="getRole() == 'EMPLOYEE' || getRole() == 'ADMIN'">
+    <div *ngIf="getRole() == 'EMPLOYEE' || getRole() == 'MANAGER'">
         <p-button [link]="true" [routerLink]="'evaluation-create'" *ngIf="authService.getUserRole() == 'MANAGER'">Create evaluation</p-button>
         <p-button [link]="true" [routerLink]="'dashboard'">Dashboard</p-button>
 

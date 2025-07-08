@@ -1,4 +1,8 @@
-<h1 class="text-center text-primary mt-3 lg:mt-5">Received feedbacks</h1>
+<div class="flex justify-content-between align-items-center">
+  <p-button  label="Back" icon="pi pi-arrow-left" iconPos="left" [routerLink]="'/dashboard'"></p-button>
+  <h1 class="text-center text-primary mt-3 lg:mt-5">Received feedbacks</h1>
+  <div></div>
+</div>
 <div class="grid">
   <div *ngFor="let feedback of feedbackList" class="col-12 lg:col-6">
     <p-card styleClass="feedback-card border-1 border-primary">

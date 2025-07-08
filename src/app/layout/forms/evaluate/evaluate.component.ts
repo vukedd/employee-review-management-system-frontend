@@ -44,9 +44,9 @@ export class EvaluateComponent {
   ) {
     concreteEvaluationService.getConcreteEvaluation(this.route.snapshot.params["id"]).subscribe({
       next: (next) => {
-          if (next.reviewer.username != this.authService.getUsername()) {
-            this.router.navigate(['/dashboard']);
-          }
+        if (next.reviewer.username != this.authService.getUsername()) {
+          this.router.navigate(['/dashboard']);
+        }
         this.evaluation = next
         this.reviewee = next.reviewee.username
         this.responses = next.responses
