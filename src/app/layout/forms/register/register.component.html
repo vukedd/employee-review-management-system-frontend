@@ -57,7 +57,7 @@
             </p-floatlabel>
         </div>
         <div class="mb-3">
-            <span>Already have an account? </span><a href="#" (click)="onSignInClick(); $event.preventDefault()"> Sign in!</a>
+            <span>Already have an account? </span><a href="#" (click)="onSignInClick(); $event.preventDefault()" class="text-primary no-underline"> Sign in!</a>
         </div>
         <p-button [type]="'submit'" [loading]="loading" (onClick)="submitRegisterRequest()" [disabled]="isValid()">Submit</p-button>
     </div>

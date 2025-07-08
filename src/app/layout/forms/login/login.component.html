@@ -22,7 +22,7 @@
             </p-floatlabel>
         </div>
         <div class="mb-3">
-            <span>Don't have an account? </span><a href="#" (click)="onSignUpClick(); $event.preventDefault()"> Sign up here!</a>
+            <span>Don't have an account? </span><a href="#" (click)="onSignUpClick(); $event.preventDefault()" class="text-primary no-underline"> Sign up here!</a>
         </div>
         <p-button [type]="'submit'" [loading]="loading" (onClick)="submitLoginRequest()" [disabled]="isValid()">Submit</p-button>
     </div>

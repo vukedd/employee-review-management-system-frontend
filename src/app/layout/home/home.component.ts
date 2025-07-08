@@ -53,7 +53,7 @@ export class HomeComponent {
     private concreteEvaluationService: ConcreteEvaluationService,
     private feedbackService: FeedbackService,
     private membershipService: MembershipService,
-    private messageService: MessageService,
+    private messageService: MessageService
   ) {
     this.username = authService.getUsername() ?? 'User';
 
@@ -71,13 +71,14 @@ export class HomeComponent {
           this.feedback.submissionTimestamp;
         this.feedbackDate = submissionDate?.split('T')[0];
       },
-      error: (error) => {},
+      error: (error) => {
+        this.feedback = undefined;
+      },
     });
 
     this.membershipService.getTeammatesByUsername().subscribe({
       next: (next) => {
         this.teammates = next;
-        console.log(next);
       },
     });
   }
@@ -94,12 +95,24 @@ export class HomeComponent {
       visibility: this.selectedPrivacyOption.value,
     };
 
-    if (feedback.content?.trim() == "" || feedback.reviewee?.trim() == "") {
-        this.messageService.add({
-          severity: 'error',
-          detail: 'Please check all field before submitting!',
-          summary: 'Action failure!'
-        });
+    console.log(feedback);
+
+    if (feedback.content == undefined || feedback.reviewee == undefined) {
+      this.messageService.add({
+        severity: 'error',
+        detail: 'Please check all field before submitting!',
+        summary: 'Action failure!',
+      });
+      return;
+    }
+
+    if (feedback.content.trim() == "") {
+      this.messageService.add({
+        severity: 'error',
+        detail: 'Please check all field before submitting!',
+        summary: 'Action failure!',
+      });
+      return;
     }
 
     this.feedbackService.createFeedback(feedback).subscribe({
@@ -108,15 +121,16 @@ export class HomeComponent {
         this.messageService.add({
           severity: 'success',
           detail: 'Evaluation submitted sucessfully!',
-          summary: 'Action success!'
+          summary: 'Action success!',
         });
-      }, error: (error) => {
+      },
+      error: (error) => {
         this.messageService.add({
           severity: 'error',
           detail: 'An error occurred while submitting the feedback!',
-          summary: 'Action failure!'
+          summary: 'Action failure!',
         });
-      }
+      },
     });
   }
 

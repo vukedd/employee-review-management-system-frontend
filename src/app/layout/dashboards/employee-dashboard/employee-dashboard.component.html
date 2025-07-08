@@ -140,13 +140,7 @@
                     <p-button
                       label="View evaluation"
                       styleClass="p-button-outlined"
-                    ></p-button>
-                    <p-button
-                      label="Edit"
-                      icon="pi pi-file-edit"
-                      styleClass="p-button-outlined"
-                      *ngIf="evaluation.evaluationType == 0"
-                      [routerLink]="['/evaluation/edit', evaluation.id]"  
+                      [routerLink]="['/evaluation', evaluation.id]"  
                     ></p-button>
                   </div>
                 </div>

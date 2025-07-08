@@ -1,0 +1,33 @@
+<div class="flex justify-content-center flex-column">
+  <div class="flex justify-content-between align-items-center">
+    <p-button
+      label="Back"
+      icon="pi pi-arrow-left"
+      iconPos="left"
+      [routerLink]="'/dashboard'"
+    ></p-button>
+    <h1 class="text-center text-xl lg:text-4xl">
+      Evaluated teammate: <span class="text-primary"> {{ reviewee }}</span>
+    </h1>
+    <p-button
+      label="Edit"
+      icon="pi pi-file-edit"
+      styleClass="p-button-outlined"
+      *ngIf="evaluation.type == 0"
+      [routerLink]="['/evaluation/edit', evaluation.id]"
+    ></p-button>
+  <div *ngIf="evaluation.type != 0">
+  </div>
+  </div>
+  <p-card class="text-xl p-3">
+    <div
+      *ngFor="let question of responses; let i = index"
+      class="flex flex-column"
+    >
+      <div class="text-3xl mb-2">{{ i + 1 + "." }} {{ question.question }}</div>
+      <p>{{ question.content }}</p>
+    </div>
+    <div class="flex justify-content-center"></div>
+  </p-card>
+</div>
+<p-toast [position]="toastPositionService.getPosition()"></p-toast>

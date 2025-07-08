@@ -17,11 +17,11 @@
   <div class="grid" *ngIf="getRole() == 'EMPLOYEE'">
     <div
       class="flex flex-column justify-content-center align-content-center col-12 lg:col-6"
-    >
+      >
       <div class="flex justify-content-center align-items-center">
         <h2 class="text-primary">Recent feedback</h2>
       </div>
-      <div class="px-0 lg:px-8">
+      <div class="px-0 lg:px-8" *ngIf="feedback != undefined">
         <p-card
           styleClass="feedback-card lg:mx-8 bg-black-alpha-90 border-1 border-primary"
         >
@@ -56,6 +56,9 @@
           >
         </div>
       </div>
+      <div class="px-0 lg:px-8 flex justify-content-center" *ngIf="feedback == undefined">
+        <h1 class="text-xl lg:text-3xl">You haven't got any feedback yet!</h1>
+      </div>
     </div>
     <div
       class="text-center flex align-items-center justify-content-center flex flex-column mb-4 col-12 lg:col-6"
@@ -65,7 +68,7 @@
         now.
       </h1>
       <p-button class="my-4" (onClick)="initFeedbackModal()"
-        >Leave feedback</p-button
+        >Give feedback</p-button
       >
     </div>
   </div>
