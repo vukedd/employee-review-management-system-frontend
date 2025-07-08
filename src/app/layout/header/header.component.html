@@ -1,6 +1,6 @@
 <div class="flex justify-content-between w-full border-bottom-1 border-primary  pb-3 pt-3 bg-black-alpha-90 left-0 right-0 top-0 fixed  headercomponent">
     <div class="flex justify-content-center align-items-center text-xl ml-3">
-        AppName
+        RateWise
     </div>
     <div *ngIf="getRole() == 'EMPLOYEE' || getRole() == 'MANAGER'">
         <p-button [link]="true" [routerLink]="'evaluation/create'" *ngIf="authService.getUserRole() == 'MANAGER'">Create evaluation</p-button>

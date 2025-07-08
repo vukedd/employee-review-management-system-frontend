@@ -31,4 +31,8 @@ export class ConcreteEvaluationService {
     let username: string | undefined | null = this.authService.getUsername()
     return this.http.get(API_URL + "/concreteEvaluation/count/" + username);
   }
+
+  getPeerEvaluationsByTeamId(teamId: number) {
+    return this.http.get(API_URL + "/concreteEvaluation/peer/" + teamId.toString());
+  }
 }
