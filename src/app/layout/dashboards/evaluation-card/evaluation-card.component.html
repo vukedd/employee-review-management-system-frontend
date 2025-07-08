@@ -1,0 +1,69 @@
+<div class="surface-ground shadow-2 border-round-lg p-4 m-2 flex flex-column h-full">
+  <!-- Cleaner title using ngSwitch -->
+  <div class="border-bottom-1 surface-border pb-3 mb-3" [ngSwitch]="evaluation.type">
+    <h3 *ngSwitchCase="0" class="text-xl font-bold text-900 m-0">Self evaluation</h3>
+    <h3 *ngSwitchCase="1" class="text-xl font-bold text-900 m-0">Peer evaluation</h3>
+    <h3 *ngSwitchCase="2" class="text-xl font-bold text-900 m-0">Lead evaluation</h3>
+  </div>
+
+  <!-- Status -->
+  <div class="py-2 flex justify-content-between">
+    <span class="text-color-secondary font-medium">Status:</span>
+   <span
+                      class="font-semibold text-green-500"
+                      *ngIf="!evaluation.pending"
+                    >
+                      {{ "Completed" }}</span
+                    >
+                    <span
+                      class="font-semibold text-red-500"
+                      *ngIf="
+                        evaluation.pending && evaluation.deadline < currDate
+                      "
+                    >
+                      {{ "Missed" }}</span
+                    >
+                    <span
+                      class="font-semibold text-orange-300"
+                      *ngIf="
+                        evaluation.pending && evaluation.deadline >= currDate
+                      "
+                    >
+                      {{ "Pending" }}</span
+                    >
+  </div>
+
+  <!-- Deadline -->
+  <div class="py-2 flex justify-content-between">
+    <span class="text-color-secondary font-medium">Deadline:</span>
+    <span class="font-semibold">
+      {{ evaluation.deadline.toLocaleDateString("en-GB").replaceAll("/", "-") }}
+    </span>
+  </div>
+
+  <!-- Evaluating -->
+  <div class="py-2 flex justify-content-between">
+    <span class="text-color-secondary font-medium">Reviewer:</span>
+    <span class="font-semibold text-green-500">{{ evaluation.reviewer }}</span>
+  </div>
+  <div class="py-2 flex justify-content-between">
+    <span class="text-color-secondary font-medium">Reviewed:</span>
+    <span class="font-semibold text-green-500">{{ evaluation.reviewee }}</span>
+  </div>
+  
+  <!-- Action Button -->
+  <div class="mt-auto pt-3 flex justify-content-end">
+    <p-button 
+      *ngIf="type == 1"
+      label="View evaluation"
+      styleClass="p-button-outlined"
+      [routerLink]="['/evaluation', evaluation.id]">
+    </p-button>
+    <p-button 
+      *ngIf="type == 0"
+      label="Evaluate"
+      styleClass="p-button-outlined"
+      [routerLink]="['/evaluation/form', evaluation.id]">
+    </p-button>
+  </div>
+</div>

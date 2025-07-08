@@ -48,7 +48,7 @@ export class EvaluateComponent {
           this.router.navigate(['/dashboard']);
         }
         this.evaluation = next
-        this.reviewee = next.reviewee.username
+        this.reviewee = next.reviewee
         this.responses = next.responses
 
         for (let i = 0; i < this.responses.length; i ++) {

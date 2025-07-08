@@ -9,187 +9,21 @@
       <h1 class="text-center">{{ m.name }} | Developer</h1>
       <div class="grid">
         <div class="col-12 lg:col-6">
-          <h2 class="text-center text-primary">Pending evaluations</h2>
-          <div
-            class="w-full mb-4 border-round-xl p-3"
-            *ngIf="pendingEvaluations.get(m.teamId)?.length != 0"
-          >
-            <p-carousel
-              [value]="pendingEvaluations.get(m.teamId) ?? []"
-              orientation="horizontal"
-              [numVisible]="1"
-              [numScroll]="1"
-            >
-              <ng-template pTemplate="item" let-evaluation>
-                <div
-                  class="surface-ground shadow-2 border-round-lg p-4 m-2 flex flex-column"
-                >
-                  <div class="border-bottom-1 surface-border pb-3 mb-3">
-                    <h3
-                      class="text-xl font-bold text-900 m-0"
-                      *ngIf="evaluation.evaluationType == 0"
-                    >
-                      Self evaluation
-                    </h3>
-                    <h3
-                      class="text-xl font-bold text-900 m-0"
-                      *ngIf="evaluation.evaluationType == 1"
-                    >
-                      Peer evaluation
-                    </h3>
-                    <h3
-                      class="text-xl font-bold text-900 m-0"
-                      *ngIf="evaluation.evaluationType == 2"
-                    >
-                      Lead evaluation
-                    </h3>
-                  </div>
-
-                  <div class="py-2 flex flex-column gap-3">
-                    <div class="flex justify-content-between">
-                      <span class="text-color-secondary font-medium"
-                        >Status:</span
-                      >
-                      <span class="font-semibold text-orange-300">{{
-                        "Pending"
-                      }}</span>
-                    </div>
-                  </div>
-
-                  <div class="py-2 flex flex-column gap-3">
-                    <div class="flex justify-content-between">
-                      <span class="text-color-secondary font-medium"
-                        >Deadline:</span
-                      >
-                      <span class="font-semibold text-orange-300">
-                        {{
-                          evaluation.deadline
-                            .toLocaleDateString("en-GB")
-                            .replaceAll("/", "-")
-                        }}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="py-2 flex flex-column gap-3">
-                    <div class="flex justify-content-between">
-                      <span class="text-color-secondary font-medium"
-                        >Evaluating:</span
-                      >
-                      <span class="font-semibold text-green-500">
-                        {{ evaluation.reviewee.username }}</span
-                      >
-                    </div>
-                  </div>
-                  <div class="mt-auto pt-3 flex justify-content-end gap-2">
-                    <p-button
-                      label="Evaluate"
-                      icon="pi pi-file-edit"
-                      styleClass="p-button-outlined"
-                      [routerLink]="['/evaluation', evaluation.id]"
-                    ></p-button>
-                  </div>
-                </div>
-              </ng-template>
-            </p-carousel>
-          </div>
-          <div *ngIf="pendingEvaluations.get(m.teamId)?.length == 0">
-            <p class="text-center">
-              There are currently no pending evaluations for this
-            </p>
-          </div>
+          <app-evaluation-list
+            [evaluations]="pendingEvaluations.get(m.teamId) ?? []"
+            [type]="0"
+            [title]="'Pending evaluations'"
+            [emptyMessage]="'There are currently no pending evaluations!'"
+          ></app-evaluation-list>
         </div>
 
         <div class="col-12 lg:col-6">
-          <h2 class="text-center text-primary">Submitted evaluations</h2>
-          <div
-            class="w-full mb-4 border-round-xl p-3"
-            *ngIf="submittedEvaluations.get(m.teamId)?.length != 0"
-          >
-            <p-carousel
-              [value]="submittedEvaluations.get(m.teamId) ?? []"
-              orientation="horizontal"
-              [numVisible]="1"
-              [numScroll]="1"
-            >
-              <ng-template pTemplate="item" let-evaluation>
-                <div
-                  class="surface-ground shadow-2 border-round-lg p-4 m-2 flex flex-column"
-                >
-                  <div class="border-bottom-1 surface-border pb-3 mb-3">
-                    <h3
-                      class="text-xl font-bold text-900 m-0"
-                      *ngIf="evaluation.evaluationType == 0"
-                    >
-                      Self evaluation
-                    </h3>
-                    <h3
-                      class="text-xl font-bold text-900 m-0"
-                      *ngIf="evaluation.evaluationType == 1"
-                    >
-                      Peer evaluation
-                    </h3>
-                    <h3
-                      class="text-xl font-bold text-900 m-0"
-                      *ngIf="evaluation.evaluationType == 2"
-                    >
-                      Lead evaluation
-                    </h3>
-                  </div>
-
-                  <div class="py-2 flex flex-column gap-3">
-                    <div class="flex justify-content-between">
-                      <span class="text-color-secondary font-medium"
-                        >Status:</span
-                      >
-                      <span class="font-semibold text-green-500">
-                        {{ "Completed" }}</span
-                      >
-                    </div>
-                  </div>
-
-                  <div class="py-2 flex flex-column gap-3">
-                    <div class="flex justify-content-between">
-                      <span class="text-color-secondary font-medium"
-                        >Deadline:</span
-                      >
-                      <span class="font-semibold text-orange-300">
-                        {{
-                          evaluation.deadline
-                            .toLocaleDateString("en-GB")
-                            .replaceAll("/", "-")
-                        }}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="py-2 flex flex-column gap-3">
-                    <div class="flex justify-content-between">
-                      <span class="text-color-secondary font-medium"
-                        >Evaluating:</span
-                      >
-                      <span class="font-semibold text-green-500">
-                        {{ evaluation.reviewee.username }}</span
-                      >
-                    </div>
-                  </div>
-                  <div class="mt-auto pt-3 flex justify-content-end gap-2">
-                    <p-button
-                      label="View evaluation"
-                      styleClass="p-button-outlined"
-                      [routerLink]="['/evaluation', evaluation.id]"
-                    ></p-button>
-                  </div>
-                </div>
-              </ng-template>
-            </p-carousel>
-          </div>
-          <div *ngIf="submittedEvaluations.get(m.teamId)?.length == 0">
-            <p class="text-center">
-              Hey, it seems like you haven't submitted any evaluations yet! You
-              should probably check your pending evaluations! :D
-            </p>
-          </div>
+          <app-evaluation-list
+            [evaluations]="submittedEvaluations.get(m.teamId) ?? []"
+            [type]="1"
+            [title]="'Submitted evaluations'"
+            [emptyMessage]="'You haven`t submitted any evaluationts yet. Be sure to check your pending evaluations tab!'"
+          ></app-evaluation-list>
         </div>
       </div>
     </div>
@@ -216,292 +50,32 @@
         <div
           class="col-12 lg:col-6 flex justify-content-center align-content-center flex-column"
         >
-          <h1 class="text-center text-primary">Peer evaluations</h1>
-          <p-carousel
-            [value]="peerEvaluations.get(m.teamId) ?? []"
-            orientation="horizontal"
-            [numVisible]="1"
-            [numScroll]="1"
-          >
-            <ng-template pTemplate="item" let-evaluation>
-              <div
-                class="surface-ground shadow-2 border-round-lg p-4 m-2 flex flex-column"
-              >
-                <div class="border-bottom-1 surface-border pb-3 mb-3">
-                  <h3
-                    class="text-xl font-bold text-900 m-0"
-                    *ngIf="evaluation.evaluationType == 0"
-                  >
-                    Self evaluation
-                  </h3>
-                  <h3
-                    class="text-xl font-bold text-900 m-0"
-                    *ngIf="evaluation.evaluationType == 1"
-                  >
-                    Peer evaluation
-                  </h3>
-                  <h3
-                    class="text-xl font-bold text-900 m-0"
-                    *ngIf="evaluation.evaluationType == 2"
-                  >
-                    Lead evaluation
-                  </h3>
-                </div>
-
-                <div class="py-2 flex flex-column gap-3">
-                  <div class="flex justify-content-between">
-                    <span class="text-color-secondary font-medium"
-                      >Status:</span
-                    >
-                    <span
-                      class="font-semibold text-green-500"
-                      *ngIf="!evaluation.pending"
-                    >
-                      {{ "Completed" }}</span
-                    >
-                    <span
-                      class="font-semibold text-red-500"
-                      *ngIf="
-                        evaluation.pending && evaluation.deadline < currDate
-                      "
-                    >
-                      {{ "Missed" }}</span
-                    >
-                    <span
-                      class="font-semibold text-orange-300"
-                      *ngIf="
-                        evaluation.pending && evaluation.deadline >= currDate
-                      "
-                    >
-                      {{ "Pending" }}</span
-                    >
-                  </div>
-                </div>
-
-                <div class="py-2 flex flex-column gap-3">
-                  <div class="flex justify-content-between">
-                    <span class="text-color-secondary font-medium"
-                      >Deadline:</span
-                    >
-                    <span class="font-semibold text-orange-300">
-                      {{
-                        evaluation.deadline
-                          .toLocaleDateString("en-GB")
-                            .replaceAll("/", "-")
-                      }}
-                    </span>
-                  </div>
-                </div>
-
-                <div class="py-2 flex flex-column gap-3">
-                  <div class="flex justify-content-between">
-                    <span class="text-color-secondary font-medium"
-                      >Evaluating:</span
-                    >
-                    <span class="font-semibold text-green-500">
-                      {{ evaluation.reviewee.username }}</span
-                    >
-                  </div>
-                </div>
-                <div
-                  class="mt-auto pt-3 flex justify-content-end gap-2"
-                  *ngIf="!evaluation.pending"
-                >
-                  <p-button
-                    label="View evaluation"
-                    styleClass="p-button-outlined"
-                    [routerLink]="['/evaluation', evaluation.id]"
-                  ></p-button>
-                </div>
-              </div>
-            </ng-template>
-          </p-carousel>
+          <app-evaluation-list
+            [evaluations]="peerEvaluations.get(m.teamId) ?? []"
+            [type]="2"
+            [title]="'Peer evaluations'"
+            [emptyMessage]="'There is no previous history of peer evaluations for this team!'"
+          ></app-evaluation-list>
         </div>
       </div>
       <p-divider></p-divider>
       <div class="grid">
         <div class="col-12 lg:col-6">
-          <h2 class="text-center text-primary">Pending evaluations</h2>
-          <div
-            class="w-full mb-4 border-round-xl p-3"
-            *ngIf="pendingEvaluations.get(m.teamId)?.length != 0"
-          >
-            <p-carousel
-              [value]="pendingEvaluations.get(m.teamId) ?? []"
-              orientation="horizontal"
-              [numVisible]="1"
-              [numScroll]="1"
-            >
-              <ng-template pTemplate="item" let-evaluation>
-                <div
-                  class="surface-ground shadow-2 border-round-lg p-4 m-2 flex flex-column"
-                >
-                  <div class="border-bottom-1 surface-border pb-3 mb-3">
-                    <h3
-                      class="text-xl font-bold text-900 m-0"
-                      *ngIf="evaluation.evaluationType == 0"
-                    >
-                      Self evaluation
-                    </h3>
-                    <h3
-                      class="text-xl font-bold text-900 m-0"
-                      *ngIf="evaluation.evaluationType == 1"
-                    >
-                      Peer evaluation
-                    </h3>
-                    <h3
-                      class="text-xl font-bold text-900 m-0"
-                      *ngIf="evaluation.evaluationType == 2"
-                    >
-                      Lead evaluation
-                    </h3>
-                  </div>
-
-                  <div class="py-2 flex flex-column gap-3">
-                    <div class="flex justify-content-between">
-                      <span class="text-color-secondary font-medium"
-                        >Status:</span
-                      >
-                      <span class="font-semibold text-green-500">
-                        {{ "Completed" }}</span
-                      >
-                    </div>
-                  </div>
-
-                  <div class="py-2 flex flex-column gap-3">
-                    <div class="flex justify-content-between">
-                      <span class="text-color-secondary font-medium"
-                        >Deadline:</span
-                      >
-                      <span class="font-semibold text-orange-300">
-                        {{
-                          evaluation.deadline
-                            .toLocaleDateString("en-GB")
-                            .replaceAll("/", "-")
-                        }}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="py-2 flex flex-column gap-3">
-                    <div class="flex justify-content-between">
-                      <span class="text-color-secondary font-medium"
-                        >Evaluating:</span
-                      >
-                      <span class="font-semibold text-green-500">
-                        {{ evaluation.reviewee.username }}</span
-                      >
-                    </div>
-                  </div>
-                  <div class="mt-auto pt-3 flex justify-content-end gap-2">
-                    <p-button
-                      label="Evaluate"
-                      icon="pi pi-file-edit"
-                      styleClass="p-button-outlined"
-                      [routerLink]="['/evaluation', evaluation.id]"
-                    ></p-button>
-                  </div>
-                </div>
-              </ng-template>
-            </p-carousel>
-          </div>
-          <div *ngIf="pendingEvaluations.get(m.teamId)?.length == 0">
-            <p class="text-center">
-              There are currently no pending evaluations for this
-            </p>
-          </div>
+          <app-evaluation-list
+            [evaluations]="pendingEvaluations.get(m.teamId) ?? []"
+            [type]="0"
+            [title]="'Pending evaluations'"
+            [emptyMessage]="'There are currently no pending evaluations!'"
+          ></app-evaluation-list>
         </div>
 
         <div class="col-12 lg:col-6">
-          <h2 class="text-center text-primary">Submitted evaluations</h2>
-          <div
-            class="w-full mb-4 border-round-xl p-3"
-            *ngIf="submittedEvaluations.get(m.teamId)?.length != 0"
-          >
-            <p-carousel
-              [value]="submittedEvaluations.get(m.teamId) ?? []"
-              orientation="horizontal"
-              [numVisible]="1"
-              [numScroll]="1"
-            >
-              <ng-template pTemplate="item" let-evaluation>
-                <div
-                  class="surface-ground shadow-2 border-round-lg p-4 m-2 flex flex-column"
-                >
-                  <div class="border-bottom-1 surface-border pb-3 mb-3">
-                    <h3
-                      class="text-xl font-bold text-900 m-0"
-                      *ngIf="evaluation.evaluationType == 0"
-                    >
-                      Self evaluation
-                    </h3>
-                    <h3
-                      class="text-xl font-bold text-900 m-0"
-                      *ngIf="evaluation.evaluationType == 1"
-                    >
-                      Peer evaluation
-                    </h3>
-                    <h3
-                      class="text-xl font-bold text-900 m-0"
-                      *ngIf="evaluation.evaluationType == 2"
-                    >
-                      Lead evaluation
-                    </h3>
-                  </div>
-
-                  <div class="py-2 flex flex-column gap-3">
-                    <div class="flex justify-content-between">
-                      <span class="text-color-secondary font-medium"
-                        >Status:</span
-                      >
-                      <span class="font-semibold text-green-500">
-                        {{ "Completed" }}</span
-                      >
-                    </div>
-                  </div>
-
-                  <div class="py-2 flex flex-column gap-3">
-                    <div class="flex justify-content-between">
-                      <span class="text-color-secondary font-medium"
-                        >Deadline:</span
-                      >
-                      <span class="font-semibold text-orange-300">
-                        {{
-                          evaluation.deadline
-                            .toLocaleDateString("en-GB")
-                            .replaceAll("/", "-")
-                        }}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="py-2 flex flex-column gap-3">
-                    <div class="flex justify-content-between">
-                      <span class="text-color-secondary font-medium"
-                        >Evaluating:</span
-                      >
-                      <span class="font-semibold text-green-500">
-                        {{ evaluation.reviewee.username }}</span
-                      >
-                    </div>
-                  </div>
-                  <div class="mt-auto pt-3 flex justify-content-end gap-2">
-                    <p-button
-                      label="View evaluation"
-                      styleClass="p-button-outlined"
-                      [routerLink]="['/evaluation', evaluation.id]"
-                    ></p-button>
-                  </div>
-                </div>
-              </ng-template>
-            </p-carousel>
-          </div>
-          <div *ngIf="submittedEvaluations.get(m.teamId)?.length == 0">
-            <p class="text-center">
-              Hey, it seems like you haven't submitted any evaluations yet! You
-              should probably check your pending evaluations! :D
-            </p>
-          </div>
+          <app-evaluation-list
+            [evaluations]="submittedEvaluations.get(m.teamId) ?? []"
+            [type]="1"
+            [title]="'Submitted evaluations'"
+            [emptyMessage]="'You haven`t submitted any evaluationts yet. Be sure to check your pending evaluations tab!'"
+          ></app-evaluation-list>
         </div>
       </div>
     </div>

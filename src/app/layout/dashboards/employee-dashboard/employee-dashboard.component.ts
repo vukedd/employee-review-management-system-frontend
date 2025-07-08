@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { OrganizationChartModule } from 'primeng/organizationchart';
 import { MessageService } from 'primeng/api';
 import { DividerModule } from 'primeng/divider';
+import { EvaluationListComponent } from "../evaluation-list/evaluation-list.component";
 
 @Component({
   selector: 'app-employee-dashboard',
@@ -22,7 +23,8 @@ import { DividerModule } from 'primeng/divider';
     RouterModule,
     OrganizationChartModule,
     DividerModule,
-  ],
+    EvaluationListComponent
+],
   templateUrl: './employee-dashboard.component.html',
   styleUrl: './employee-dashboard.component.css',
 })

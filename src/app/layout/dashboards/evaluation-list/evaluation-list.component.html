@@ -1,0 +1,17 @@
+<h2 class="text-center text-primary">{{ title }}</h2>
+<div class="w-full mb-4 border-round-xl p-3" *ngIf="evaluations.length != 0">
+  <p-carousel
+    [value]="evaluations"
+    orientation="horizontal"
+    [numVisible]="1"
+    [numScroll]="1"
+  >
+    <ng-template pTemplate="item" let-evaluation>
+      <app-evaluation-card [evaluation]="evaluation" [type]="type" >
+      </app-evaluation-card>
+    </ng-template>
+  </p-carousel>
+</div>
+<div *ngIf="evaluations.length == 0">
+  <p class="text-center">{{ emptyMessage }}</p>
+</div>
