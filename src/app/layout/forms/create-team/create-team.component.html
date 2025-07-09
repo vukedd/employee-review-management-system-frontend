@@ -58,7 +58,7 @@
               icon="pi pi-arrow-right"
               iconPos="right"
               [disabled]="!validStep2()"
-              (onClick)="activateCallback(3); setTeamLead();"
+              (onClick)="activateCallback(3); setTeamLead()"
             />
           </div>
         </div>
@@ -91,26 +91,39 @@
             (onClick)="activateCallback(3); submitForm()"
           />
         </div>
-        <div class="card p-4 mt-4">
-          <h1 class="text-xl font-bold mb-4 border-bottom-1 pb-2">
-            Team overview
-          </h1>
-          <div class="pb-3">
-            <span class="text-3xl"
-              >Team name:
-              <span class="text-primary"> {{ teamName }} </span></span
-            >
-          </div>
-          <div>
-            <span class="text-3xl mb-2">Teammates: </span>
-            <div *ngFor="let user of selectedUsers" class="mb-2">
-              <div class="m-2" *ngIf="!user.isTeamLead">
-                {{ user.name }}
+ <div class="card p-4 mt-4">
+          <div class="card p-4 mt-4">
+
+            <p-card>
+              <ng-template pTemplate="header">
+                <div class="p-4 border-b">
+                  <h2 class="text-xl font-bold m-0">Team Overview</h2>
+                </div>
+              </ng-template>
+
+              <div class="mb-6 flex flex-column gap-2 align-items-center justify-content-center">
+                <span class="text-3xl font-semibold">Team Name</span>
+                <span class="text-2xl font-light text-primary text-3xl">{{
+                  teamName
+                }}</span>
               </div>
-              <div class="m-2 text-primary" *ngIf="user.isTeamLead">
-                {{ user.name }}
+              <p-divider></p-divider>
+              <div class="flex flex-column gap-2 justify-content-center align-items-center w-full mt-4">
+                <span class="font-semibold mb-2 text-3xl">Members</span>
+                <div class="flex flex-column w-full">
+                  <div
+                    *ngFor="let user of selectedUsers"
+                    class="p-4 border-top-1 border-gray-700 w-full justify-content-center flex font-bold"
+                  >
+                    <span>{{ user.name }}    </span
+                    > <span
+                      class="pi pi-star-fill text-primary"
+                      *ngIf="user.isTeamLead"
+                    ></span>
+                  </div>
+                </div>
               </div>
-            </div>
+            </p-card>
           </div>
         </div>
       </ng-template>

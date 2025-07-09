@@ -11,6 +11,10 @@ import { StepperModule } from 'primeng/stepper';
 import { TeamService } from '../../../services/team/team.service';
 import { UserService } from '../../../services/user/user.service';
 import { TeamCommandRequestDto } from '../../../models/team/teamCommandRequestDto';
+import { CardModule } from 'primeng/card';
+import { DataViewModule } from 'primeng/dataview';
+import { TagModule } from 'primeng/tag';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-edit-team',
@@ -22,6 +26,10 @@ import { TeamCommandRequestDto } from '../../../models/team/teamCommandRequestDt
     FormsModule,
     SelectModule,
     InputTextModule,
+    TagModule,
+    CardModule,
+    DataViewModule,
+    DividerModule
   ],
   templateUrl: './edit-team.component.html',
   styleUrl: './edit-team.component.css',
@@ -92,7 +100,6 @@ export class EditTeamComponent {
 
   validStep2() {
     if (this.teamLead != undefined) {
-      console.log(this.teamLead);
       return true;
     }
     return false;
@@ -134,8 +141,6 @@ export class EditTeamComponent {
       });
     });
 
-    console.log(teamRequest);
-
     this.teamService.editTeam(this.teamId, teamRequest).subscribe({
       next: (next) => {
         this.router.navigate(['team/' + this.teamId]);
@@ -155,9 +160,12 @@ export class EditTeamComponent {
       },
     });
   }
-  
+
   onSelectedUsersChange() {
-    if (this.teamLead && !this.selectedUsers.some(user => user.id === this.teamLead.id)) {
+    if (
+      this.teamLead &&
+      !this.selectedUsers.some((user) => user.id === this.teamLead.id)
+    ) {
       this.teamLead = null;
     }
   }

@@ -37,6 +37,7 @@ export class TeamDetailsComponent {
           detail: 'An error occurred while creating team',
           summary: 'Please check all fields before submitting again!',
         });
+        router.navigate(["dashboard"]);
       },
     });
   }

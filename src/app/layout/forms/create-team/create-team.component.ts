@@ -11,6 +11,10 @@ import { TeamService } from '../../../services/team/team.service';
 import { UserService } from '../../../services/user/user.service';
 import { Router } from '@angular/router';
 import { TeamCommandRequestDto } from '../../../models/team/teamCommandRequestDto';
+import { TagModule } from 'primeng/tag';
+import { CardModule } from 'primeng/card';
+import { DataViewModule } from 'primeng/dataview';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-create-team',
@@ -22,6 +26,10 @@ import { TeamCommandRequestDto } from '../../../models/team/teamCommandRequestDt
     FormsModule,
     SelectModule,
     InputTextModule,
+    TagModule,
+    CardModule,
+    DataViewModule,
+    DividerModule
   ],
   templateUrl: './create-team.component.html',
   styleUrl: './create-team.component.css',
@@ -107,7 +115,7 @@ export class CreateTeamComponent {
 
     this.teamService.createTeam(teamRequest).subscribe({
       next: (next) => {
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['team/' + next.id]);
         this.messageService.add({
           severity: 'success',
           detail: 'Team ' + teamRequest.name + ' succesfully created!',
