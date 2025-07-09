@@ -1,0 +1,119 @@
+<p-stepper [value]="1" class="basis-[50rem]">
+  <p-step-list>
+    <p-step [value]="1">Select teammates</p-step>
+    <p-step [value]="2">Pick team lead</p-step>
+    <p-step [value]="3">Overview</p-step>
+  </p-step-list>
+  <p-step-panels>
+    <p-step-panel [value]="1">
+      <ng-template #content let-activateCallback="activateCallback">
+        <div clas="flex justify-content-end">
+          <div class="flex pt-6 justify-content-end">
+            <p-button
+              label="Next"
+              icon="pi pi-arrow-right"
+              iconPos="right"
+              (onClick)="activateCallback(2)"
+              [disabled]="!validStep1()"
+              class="mb-3"
+            />
+          </div>
+        </div>
+        <div
+          class="flex justify-content-center align-content-center flex-column"
+        >
+          <h1 class="text-center">Team name</h1>
+          <input
+            type="text"
+            pInputText
+            placeholder="Enter team name"
+            [(ngModel)]="teamName"
+          />
+
+          <h1 class="text-center">Pick teammates</h1>
+          <p-multiselect
+            [options]="users"
+            [(ngModel)]="selectedUsers"
+            optionLabel="name"
+            placeholder="Select teammates"
+            [maxSelectedLabels]="10"
+            class="w-full md:w-80"
+          />
+        </div>
+      </ng-template>
+    </p-step-panel>
+
+    <p-step-panel [value]="2">
+      <ng-template #content let-activateCallback="activateCallback">
+        <div class="justify-content-between mb-3">
+          <div class="flex pt-6 justify-content-between">
+            <p-button
+              label="Back"
+              severity="secondary"
+              icon="pi pi-arrow-left"
+              (onClick)="activateCallback(1)"
+            />
+            <p-button
+              label="Next"
+              icon="pi pi-arrow-right"
+              iconPos="right"
+              [disabled]="!validStep2()"
+              (onClick)="activateCallback(3); setTeamLead();"
+            />
+          </div>
+        </div>
+        <div>
+          <h1 class="text-center">Pick team lead</h1>
+          <p-select
+            [options]="selectedUsers"
+            [(ngModel)]="teamLead"
+            optionLabel="name"
+            placeholder="Select team lead"
+            class="w-full md:w-56"
+          />
+        </div>
+      </ng-template>
+    </p-step-panel>
+
+    <p-step-panel [value]="3">
+      <ng-template #content let-activateCallback="activateCallback">
+        <div class="flex pt-6 justify-content-between">
+          <p-button
+            label="Back"
+            severity="secondary"
+            icon="pi pi-arrow-left"
+            (onClick)="activateCallback(1)"
+          />
+          <p-button
+            label="Submit"
+            icon="pi pi-check"
+            iconPos="right"
+            (onClick)="activateCallback(3); submitForm()"
+          />
+        </div>
+        <div class="card p-4 mt-4">
+          <h1 class="text-xl font-bold mb-4 border-bottom-1 pb-2">
+            Team overview
+          </h1>
+          <div class="pb-3">
+            <span class="text-3xl"
+              >Team name:
+              <span class="text-primary"> {{ teamName }} </span></span
+            >
+          </div>
+          <div>
+            <span class="text-3xl mb-2">Teammates: </span>
+            <div *ngFor="let user of selectedUsers" class="mb-2">
+              <div class="m-2" *ngIf="!user.isLead">
+                {{ user.name }}
+              </div>
+              <div class="m-2 text-primary" *ngIf="user.isLead">
+                {{ user.name }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-step-panel>
+  </p-step-panels>
+</p-stepper>

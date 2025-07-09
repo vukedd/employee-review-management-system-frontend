@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { API_URL } from '../../../globals';
-import { AuthService } from '../auth/auth.service';
-import { jwtDecode } from "jwt-decode";
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
+import { CreateTeamRequestDto } from '../../models/team/createTeamRequestDto';
 
 
 @Injectable({
@@ -14,10 +13,14 @@ export class TeamService {
   constructor(public http: HttpClient) { }
 
   getTeamById(id: number) : Observable<any> {
-    return this.http.get(API_URL + "/team/" + id.toString());
+    return this.http.get(environment.apiUrl + "/team/" + id.toString());
   }
   
   getTeamHieararchy(teamId: number) : Observable<any> {
-    return this.http.get(API_URL + "/team/hierarchy/" + teamId.toString());
+    return this.http.get(environment.apiUrl + "/team/hierarchy/" + teamId.toString());
+  }
+
+  createTeam(teamRequest: CreateTeamRequestDto) : Observable<any> {
+    return this.http.post(environment.apiUrl + "/team/create", teamRequest);
   }
 }

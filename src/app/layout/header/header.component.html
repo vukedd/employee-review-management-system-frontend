@@ -4,6 +4,7 @@
     </div>
     <div *ngIf="getRole() == 'EMPLOYEE' || getRole() == 'MANAGER'">
         <p-button [link]="true" [routerLink]="'evaluation/create'" *ngIf="authService.getUserRole() == 'MANAGER'">Create evaluation</p-button>
+        <p-button [link]="true" [routerLink]="'team/create'" *ngIf="authService.getUserRole() == 'MANAGER'">Create Team</p-button>
         <p-button [link]="true" [routerLink]="'dashboard'">Dashboard</p-button>
 
     </div>

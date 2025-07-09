@@ -75,6 +75,27 @@ export class CreateEvaluationComponent {
     this.evaluation.type = this.evalMap.get(this.selectedEvalType);
   }
 
+  validStep1() {
+    if (this.selectedEvalType.trim() != "") {
+      return true
+    }
+
+    return false;
+  }
+
+  validStep2() {
+    let isValid: boolean = true;
+    this.evaluation.questions.forEach(question => {
+      if (question.content.trim() == "") {
+        isValid = false;
+        return
+      }
+    });
+
+    return isValid;
+  }
+
+
   addQuestion(): void {
     this.evaluation.questions.push({
       type: QuestionType.TEXT,

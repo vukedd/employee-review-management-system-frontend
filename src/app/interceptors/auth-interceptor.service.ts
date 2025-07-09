@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, throwError } from "rxjs";
 import { catchError, filter, switchMap, take, finalize } from "rxjs/operators";
 import { AuthService } from "../services/auth/auth.service";
-import { API_URL } from "../../globals";
+import { environment } from "../../environments/environment.development";
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
@@ -14,7 +14,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // Skip authentication for auth endpoints
-        if (req.url.startsWith(API_URL + "/auth/")) {
+        if (req.url.startsWith(environment.apiUrl + "/auth/")) {
             return next.handle(req);
         }
         

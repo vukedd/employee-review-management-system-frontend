@@ -7,6 +7,7 @@ import { AuthGuard } from './guards/auth/auth.guard';
 import { roleGuard } from './guards/role/role.guard';
 import { EditEvaluationComponent } from './layout/forms/edit-evaluation/edit-evaluation.component';
 import { EvaluationDetailsComponent } from './layout/forms/evaluation-details/evaluation-details.component';
+import { CreateTeamComponent } from './layout/forms/create-team/create-team.component';
 
 export const routes: Routes = [
   {
@@ -56,5 +57,14 @@ export const routes: Routes = [
     component: EvaluationDetailsComponent,
     title: 'Evaluation',
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'team/create',
+    component: CreateTeamComponent,
+    title: 'Create team',
+    canActivate: [AuthGuard, roleGuard],
+    data: {
+      expectedRole: "MANAGER"
+    }
   }
 ];

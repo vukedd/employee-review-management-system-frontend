@@ -1,8 +1,8 @@
 <p-stepper [value]="1" class="basis-[50rem] mt-5">
   <p-step-list>
-    <p-step [value]="1">Select evaluation type</p-step>
+    <p-step [value]="1">Select type</p-step>
     <p-step [value]="2">Define questions</p-step>
-    <p-step [value]="3">Review evaluation</p-step>
+    <p-step [value]="3">Overview</p-step>
   </p-step-list>
   <p-step-panels>
     <p-step-panel [value]="1">
@@ -13,6 +13,7 @@
               label="Next"
               icon="pi pi-arrow-right"
               iconPos="right"
+              [disabled]="!validStep1()"
               (onClick)="activateCallback(2); assignEvaluationType()"
             />
           </div>
@@ -47,6 +48,7 @@
               label="Next"
               icon="pi pi-arrow-right"
               iconPos="right"
+              [disabled]="!validStep2()"
               (onClick)="activateCallback(3)"
             />
           </div>
@@ -136,15 +138,12 @@
               severity="secondary"
               (onClick)="activateCallback(2)"
             />
-            <p-button 
-            label="Submit" 
-            (onClick)="submitEvaluation()" 
-            />
+            <p-button label="Submit" (onClick)="submitEvaluation()" />
           </div>
         </div>
         <div class="card p-4 mt-4">
           <h2 class="text-xl font-bold mb-4 border-bottom-1 pb-2">
-            Review Your Evaluation
+            Evaluation overview
           </h2>
 
           <div class="field mb-5">
@@ -175,21 +174,15 @@
 
                 <div class="grid p-fluid">
                   <div class="col-12 md:col-6">
-                    <span class="font-semibold text-sm"
-                      >TYPE</span
-                    >
+                    <span class="font-semibold text-sm">TYPE</span>
                     <p class="m-0">{{ question.type }}</p>
                   </div>
                   <div class="col-12 md:col-6">
-                    <span class="font-semibold text-sm"
-                      >CATEGORY</span
-                    >
+                    <span class="font-semibold text-sm">CATEGORY</span>
                     <p class="m-0">{{ question.category }}</p>
                   </div>
                   <div class="col-12 mt-2">
-                    <span class="font-semibold text-sm"
-                      >CONTENT</span
-                    >
+                    <span class="font-semibold text-sm">CONTENT</span>
                     <p class="m-0 p-2 border-round-sm mt-1">
                       {{ question.content }}
                     </p>
