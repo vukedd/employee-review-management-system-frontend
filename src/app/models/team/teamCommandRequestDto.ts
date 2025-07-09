@@ -1,6 +1,6 @@
 import { MembershipDto } from "../memberships/membershipDto"
 
-export interface CreateTeamRequestDto {
+export interface TeamCommandRequestDto {
     name: string
     memberships: MembershipDto[]
 }

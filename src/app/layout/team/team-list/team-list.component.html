@@ -1,0 +1,19 @@
+<h1 class="text-primary text-center">Teams</h1>
+<p-table [value]="teams" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template #header>
+    <tr>
+      <th>Name</th>
+      <th>Led by</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-team>
+    <tr>
+      <td>{{ team.name }}</td>
+      <td>{{ team.leadName ?? "--" }}</td>
+      <td>
+        <a [href]="['/team/' + team.id]" class="text-center pi pi-info-circle no-underline text-primary"></a>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

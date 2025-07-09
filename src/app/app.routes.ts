@@ -8,6 +8,9 @@ import { roleGuard } from './guards/role/role.guard';
 import { EditEvaluationComponent } from './layout/forms/edit-evaluation/edit-evaluation.component';
 import { EvaluationDetailsComponent } from './layout/forms/evaluation-details/evaluation-details.component';
 import { CreateTeamComponent } from './layout/forms/create-team/create-team.component';
+import { TeamListComponent } from './layout/team/team-list/team-list.component';
+import { TeamDetailsComponent } from './layout/team/team-details/team-details.component';
+import { EditTeamComponent } from './layout/forms/edit-team/edit-team.component';
 
 export const routes: Routes = [
   {
@@ -64,7 +67,34 @@ export const routes: Routes = [
     title: 'Create team',
     canActivate: [AuthGuard, roleGuard],
     data: {
-      expectedRole: "MANAGER"
-    }
-  }
+      expectedRole: 'MANAGER',
+    },
+  },
+  {
+    path: 'team',
+    component: TeamListComponent,
+    title: 'Teams',
+    canActivate: [AuthGuard, roleGuard],
+    data: {
+      expectedRole: 'MANAGER',
+    },
+  },
+  {
+    path: 'team/:id',
+    component: TeamDetailsComponent,
+    title: 'Team',
+    canActivate: [AuthGuard, roleGuard],
+    data: {
+      expectedRole: 'MANAGER',
+    },
+  },
+  {
+    path: 'team/edit/:id',
+    component: EditTeamComponent,
+    title: 'Team',
+    canActivate: [AuthGuard, roleGuard],
+    data: {
+      expectedRole: 'MANAGER',
+    },
+  },
 ];

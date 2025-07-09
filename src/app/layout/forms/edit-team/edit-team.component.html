@@ -35,9 +35,11 @@
             [options]="users"
             [(ngModel)]="selectedUsers"
             optionLabel="name"
+            dataKey="name"
             placeholder="Select teammates"
-            [maxSelectedLabels]="10"
             class="w-full md:w-80"
+            (onChange)="onSelectedUsersChange()"
+
           />
         </div>
       </ng-template>
@@ -58,7 +60,7 @@
               icon="pi pi-arrow-right"
               iconPos="right"
               [disabled]="!validStep2()"
-              (onClick)="activateCallback(3); setTeamLead();"
+              (onClick)="activateCallback(3); setTeamLead()"
             />
           </div>
         </div>
@@ -82,13 +84,13 @@
             label="Back"
             severity="secondary"
             icon="pi pi-arrow-left"
-            (onClick)="activateCallback(1)"
+            (onClick)="activateCallback(2)"
           />
           <p-button
             label="Submit"
             icon="pi pi-check"
             iconPos="right"
-            (onClick)="activateCallback(3); submitForm()"
+            (onClick)="submitForm()"
           />
         </div>
         <div class="card p-4 mt-4">

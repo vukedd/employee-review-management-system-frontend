@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { StepperModule } from 'primeng/stepper';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { SelectModule } from 'primeng/select';
-import { InputTextModule } from 'primeng/inputtext';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { SelectModule } from 'primeng/select';
+import { StepperModule } from 'primeng/stepper';
 import { TeamService } from '../../../services/team/team.service';
 import { UserService } from '../../../services/user/user.service';
-import { Router } from '@angular/router';
 import { TeamCommandRequestDto } from '../../../models/team/teamCommandRequestDto';
 
 @Component({
-  selector: 'app-create-team',
+  selector: 'app-edit-team',
   imports: [
     StepperModule,
     ButtonModule,
@@ -23,14 +23,15 @@ import { TeamCommandRequestDto } from '../../../models/team/teamCommandRequestDt
     SelectModule,
     InputTextModule,
   ],
-  templateUrl: './create-team.component.html',
-  styleUrl: './create-team.component.css',
+  templateUrl: './edit-team.component.html',
+  styleUrl: './edit-team.component.css',
 })
-export class CreateTeamComponent {
+export class EditTeamComponent {
   public users: any[] = [];
   public selectedUsers: any[] = [];
-  public teamLead: any;
+  public teamLead: any = null;
   public teamName: string = '';
+  public teamId: string;
 
   constructor(
     public messageService: MessageService,
@@ -38,6 +39,8 @@ export class CreateTeamComponent {
     public userService: UserService,
     public router: Router
   ) {
+    let urlTokens = router.routerState.snapshot.url.split('/');
+    this.teamId = urlTokens[urlTokens.length - 1];
     //populate user choice options
     this.userService.getUserChoices().subscribe({
       next: (next: any[]) => {
@@ -49,6 +52,32 @@ export class CreateTeamComponent {
           detail: 'An error occurred while fetching data',
           summary: 'If the problem persists, contact us!',
         });
+      },
+    });
+
+    //fetch previously selected users
+    this.userService.getSelectedUserChoices(Number(this.teamId)).subscribe({
+      next: (next) => {
+        this.selectedUsers = next;
+        this.selectedUsers.forEach((user) => {
+          if (user.isTeamLead) {
+            this.teamLead = user;
+          }
+        });
+      },
+      error: (next) => {
+        this.messageService.add({
+          severity: 'error',
+          detail: 'An error occurred while fetching data',
+          summary: 'If the problem persists, contact us!',
+        });
+      },
+    });
+
+    //fetch team name
+    this.teamService.getTeamById(Number(this.teamId)).subscribe({
+      next: (next) => {
+        this.teamName = next.name;
       },
     });
   }
@@ -63,9 +92,9 @@ export class CreateTeamComponent {
 
   validStep2() {
     if (this.teamLead != undefined) {
+      console.log(this.teamLead);
       return true;
     }
-
     return false;
   }
 
@@ -105,16 +134,19 @@ export class CreateTeamComponent {
       });
     });
 
-    this.teamService.createTeam(teamRequest).subscribe({
+    console.log(teamRequest);
+
+    this.teamService.editTeam(this.teamId, teamRequest).subscribe({
       next: (next) => {
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['team/' + this.teamId]);
         this.messageService.add({
           severity: 'success',
-          detail: 'Team ' + teamRequest.name + ' succesfully created!',
+          detail: 'Team succesfully edited!',
           summary: 'Action success',
         });
       },
       error: (error) => {
+        console.log(error);
         this.messageService.add({
           severity: 'error',
           detail: error.error.error,
@@ -122,5 +154,11 @@ export class CreateTeamComponent {
         });
       },
     });
+  }
+  
+  onSelectedUsersChange() {
+    if (this.teamLead && !this.selectedUsers.some(user => user.id === this.teamLead.id)) {
+      this.teamLead = null;
+    }
   }
 }

@@ -12,4 +12,8 @@ export class UserService {
   getUserChoices(): Observable<any> {
     return this.http.get(environment.apiUrl + "/user/choice");
   }
+
+  getSelectedUserChoices(teamId: number): Observable<any> {
+    return this.http.get(environment.apiUrl + "/user/choice/" + teamId.toString());
+  }
 }
