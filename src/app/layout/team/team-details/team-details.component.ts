@@ -45,7 +45,7 @@ export class TeamDetailsComponent {
           detail: 'An error occurred while fetching data',
           summary: 'Please check all fields before submitting again!',
         });
-        router.navigate(["dashboard"]);
+        router.navigate(["/dashboard"]);
       },
     });
 

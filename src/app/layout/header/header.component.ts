@@ -56,7 +56,7 @@ export class HeaderComponent {
   handleLoginSuccess(): void {
     this.isLogin = false;
     this.isRegister = false;
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['/dashboard']);
   }
 
   openLoginModal() {

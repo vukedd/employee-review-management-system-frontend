@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EmployeeDashboardComponent } from '../dashboards/employee-dashboard/employee-dashboard.component';
 import { AuthService } from '../../services/auth/auth.service';
 import { ConcreteEvaluationService } from '../../services/concrete-evaluation/concrete-evaluation.service';
@@ -7,7 +7,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { FeedbackService } from '../../services/feedback/feedback.service';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
@@ -15,7 +15,11 @@ import { MembershipService } from '../../services/membership/membership.service'
 import { TextareaModule } from 'primeng/textarea';
 import { FeedbackDto } from '../../models/feedback/feedbackDto';
 import { MessageService } from 'primeng/api';
-import { ManagerDashboardComponent } from "../dashboards/manager-dashboard/manager-dashboard.component";
+import { ManagerDashboardComponent } from '../dashboards/manager-dashboard/manager-dashboard.component';
+import { ToastModule } from 'primeng/toast';
+import { ToastsPositionService } from '../toasts/toasts.service';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-home',
@@ -30,12 +34,13 @@ import { ManagerDashboardComponent } from "../dashboards/manager-dashboard/manag
     SelectModule,
     FormsModule,
     TextareaModule,
-    ManagerDashboardComponent
-],
+    ManagerDashboardComponent,
+    ToastModule,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
+export class HomeComponent{
   public username: string | null | undefined = 'User';
   public pendingEvaluationCount: any = 0;
   public feedback: any;
@@ -55,8 +60,11 @@ export class HomeComponent {
     private concreteEvaluationService: ConcreteEvaluationService,
     private feedbackService: FeedbackService,
     private membershipService: MembershipService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    public toastService: ToastsPositionService,
+    
   ) {
+
     this.username = authService.getUsername() ?? 'User';
 
     if (this.authService.getUserRole() == 'EMPLOYEE') {
@@ -88,6 +96,7 @@ export class HomeComponent {
       });
     }
   }
+
   initFeedbackModal() {
     this.visible = true;
   }

@@ -138,7 +138,7 @@ export class CreateEvaluationPeriodComponent {
           summary: 'Action success',
           detail: 'Evaluation cycle initialized succesfully',
         });
-        this.router.navigate(["dashboard"]);
+        this.router.navigate(["/dashboard"]);
       },
       error: (error) => {
         this.messageService.add({

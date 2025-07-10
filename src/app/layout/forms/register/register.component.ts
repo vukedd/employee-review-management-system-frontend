@@ -75,7 +75,7 @@ export class RegisterComponent {
         this.messageService.add({
           severity: 'success',
           summary: 'Registration success',
-          detail: 'You have registered succesfully!',
+          detail: 'You have registered succesfully! We`ve sent you a confirmation email!',
         });
         this.loading = false;
         this.onRegisterSuccess();

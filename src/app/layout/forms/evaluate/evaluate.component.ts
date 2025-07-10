@@ -97,7 +97,7 @@ export class EvaluateComponent {
           detail: 'Evaluation successfully submitted!',
           summary: 'Evaluation success'
         })
-        this.router.navigate(['dashboard'])
+        this.router.navigate(['/dashboard'])
       }, error: (error) => {
         this.messageService.add({
           severity: 'error',

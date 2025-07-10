@@ -12,8 +12,15 @@ import { TeamListComponent } from './layout/team/team-list/team-list.component';
 import { TeamDetailsComponent } from './layout/team/team-details/team-details.component';
 import { EditTeamComponent } from './layout/forms/edit-team/edit-team.component';
 import { CreateEvaluationPeriodComponent } from './layout/evaluation-period/create-evaluation-period/create-evaluation-period.component';
+import { LandingPageComponent } from './layout/landing-page/landing-page.component';
 
 export const routes: Routes = [
+  {
+    path: '',
+    component: LandingPageComponent,
+    title: 'RateWise',
+    canActivate: [],
+  },
   {
     path: 'dashboard',
     component: HomeComponent,
@@ -106,5 +113,5 @@ export const routes: Routes = [
     data: {
       expectedRole: 'MANAGER',
     },
-  }
+  },
 ];
