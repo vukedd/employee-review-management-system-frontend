@@ -25,11 +25,14 @@ export class TeamService {
   }
 
   editTeam(teamId: any, teamRequest: TeamCommandRequestDto) : Observable<any> {
-    console.log(teamRequest);
     return this.http.put(environment.apiUrl + "/team/" + teamId, teamRequest);
   }
 
   getAllTeams(): Observable<any> {
     return this.http.get(environment.apiUrl + "/team");
+  }
+
+  getTeamChoices(): Observable<any> {
+    return this.http.get(environment.apiUrl + "/team/choice");
   }
 }

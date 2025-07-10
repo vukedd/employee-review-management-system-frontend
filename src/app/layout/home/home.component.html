@@ -76,6 +76,7 @@
 <p-divider *ngIf="getRole() == 'EMPLOYEE'"/>
 
 <app-employee-dashboard *ngIf="getRole() == 'EMPLOYEE'"></app-employee-dashboard>
+<app-manager-dashboard *ngIf="getRole() == 'MANAGER'"></app-manager-dashboard>
 
 <!-- Feedback modal -->
 <p-dialog

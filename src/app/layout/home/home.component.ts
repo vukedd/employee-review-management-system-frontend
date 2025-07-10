@@ -15,6 +15,7 @@ import { MembershipService } from '../../services/membership/membership.service'
 import { TextareaModule } from 'primeng/textarea';
 import { FeedbackDto } from '../../models/feedback/feedbackDto';
 import { MessageService } from 'primeng/api';
+import { ManagerDashboardComponent } from "../dashboards/manager-dashboard/manager-dashboard.component";
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,8 @@ import { MessageService } from 'primeng/api';
     SelectModule,
     FormsModule,
     TextareaModule,
-  ],
+    ManagerDashboardComponent
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
