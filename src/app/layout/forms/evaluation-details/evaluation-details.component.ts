@@ -31,6 +31,7 @@ export class EvaluationDetailsComponent {
   public responses: any[] = [];
   public reviewee: string = '';
   public evaluation: any = {type: 1}
+  public username: any = "";
 
   constructor(
     public route: ActivatedRoute,
@@ -40,6 +41,8 @@ export class EvaluationDetailsComponent {
     public toastPositionService: ToastsPositionService,
     private authService: AuthService
   ) {
+      this.username = authService.getUsername();
+
       concreteEvaluationService.getConcreteEvaluation(this.route.snapshot.params['id'])
       .subscribe({
         next: (next) => {

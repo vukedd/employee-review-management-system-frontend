@@ -13,10 +13,10 @@
       label="Edit"
       icon="pi pi-file-edit"
       styleClass="p-button-outlined"
-      *ngIf="evaluation.type == 0"
+      *ngIf="evaluation.type == 0 && username == reviewee"
       [routerLink]="['/evaluation/edit', evaluation.id]"
     ></p-button>
-  <div *ngIf="evaluation.type != 0">
+  <div *ngIf="evaluation.type != 0 || username != reviewee">
   </div>
   </div>
   <p-card class="text-xl p-3">

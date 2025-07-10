@@ -19,15 +19,12 @@ export class LandingPageComponent implements OnInit{
   }
   ngOnInit(): void {
     const queryParams = this.route.snapshot.queryParamMap;
-    console.log(queryParams.get('verification'));
     if (queryParams.get('verification') === 'success') {
-      console.log('ok');
       this.messageService.add({
         summary: 'Account succesfully verified!',
         severity: 'success',
       });
     } else if (queryParams.get('verification') === 'failed') {
-      console.log('not ok');
       this.messageService.add({
         summary: 'An error occurred while trying to verify account!',
         severity: 'error',

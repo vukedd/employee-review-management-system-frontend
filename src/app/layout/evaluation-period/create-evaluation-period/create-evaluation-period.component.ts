@@ -50,6 +50,7 @@ export class CreateEvaluationPeriodComponent {
   public minStartDate: Date | null = null;
   public minEndDate: Date | null = null;
   public evaluationPeriodCycle: CreateEvaluationPeriodComponent | undefined;
+  public loading: boolean = false;
 
   constructor(
     public evaluationService: EvaluationService,
@@ -110,12 +111,14 @@ export class CreateEvaluationPeriodComponent {
   }
 
   submitForm() {
+    this.loading = true;
     if (this.cycleName.trim() == '' || this.selectedEvaluations.length <= 0) {
       this.messageService.add({
         severity: 'error',
         summary: 'Couldn`t initialize evaluation cycle',
         detail: 'Please check all fields before submitting',
       });
+      this.loading = false;
       return;
     }
 
@@ -138,7 +141,9 @@ export class CreateEvaluationPeriodComponent {
           summary: 'Action success',
           detail: 'Evaluation cycle initialized succesfully',
         });
-        this.router.navigate(["/dashboard"]);
+        this.loading = false;
+
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         this.messageService.add({
@@ -146,6 +151,7 @@ export class CreateEvaluationPeriodComponent {
           summary: 'Couldn`t initialize evaluation cycle',
           detail: 'An unknown error has occurred. Try again later!',
         });
+        this.loading = false;
         return;
       },
     });

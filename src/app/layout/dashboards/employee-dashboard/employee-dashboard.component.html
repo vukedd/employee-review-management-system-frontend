@@ -37,9 +37,9 @@
         <div
           class="col-12 lg:col-6 flex justify-content-center align-content-center"
         >
-          <div>
+          <div style="overflow-x: auto; white-space: nowrap;">
             <h2 class="text-center text-primary">Team Hieararchy</h2>
-            <div class="overflow-x-auto overflow-y-auto">
+            <div >
               <p-organization-chart
                 [value]="hierarchyData.get(m.teamId)"
                 selectionMode="single"

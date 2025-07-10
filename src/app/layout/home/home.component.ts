@@ -109,7 +109,6 @@ export class HomeComponent{
       visibility: this.selectedPrivacyOption.value,
     };
 
-    console.log(feedback);
 
     if (feedback.content == undefined || feedback.reviewee == undefined) {
       this.messageService.add({

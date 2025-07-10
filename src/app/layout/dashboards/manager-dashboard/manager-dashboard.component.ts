@@ -8,10 +8,20 @@ import { TeamService } from '../../../services/team/team.service';
 import { EvaluationCycleService } from '../../../services/evaluation-cycle/evaluation-cycle.service';
 import { MessageService } from 'primeng/api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConcreteEvaluationService } from '../../../services/concrete-evaluation/concrete-evaluation.service';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-manager-dashboard',
-  imports: [SelectModule, CommonModule, ButtonModule, DividerModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    SelectModule,
+    CommonModule,
+    ButtonModule,
+    DividerModule,
+    ReactiveFormsModule,
+    FormsModule,
+    TableModule
+  ],
   templateUrl: './manager-dashboard.component.html',
   styleUrl: './manager-dashboard.component.css',
 })
@@ -19,6 +29,8 @@ export class ManagerDashboardComponent {
   statistics: StatisticsDto | undefined;
   selectedTeam: any = { id: 0, name: 'All' };
   selectedCycle: any = { id: 0, name: 'All' };
+  submittedEvaluations: any = [];
+
   public teamChoices: any = [
     {
       id: 0,
@@ -35,7 +47,8 @@ export class ManagerDashboardComponent {
   constructor(
     public teamService: TeamService,
     public evaluationCycleService: EvaluationCycleService,
-    public messageService: MessageService
+    public messageService: MessageService,
+    public concreteEvaluationService: ConcreteEvaluationService
   ) {
     evaluationCycleService.getCycleChoices().subscribe({
       next: (next: any[]) => {
@@ -81,8 +94,22 @@ export class ManagerDashboardComponent {
       .getEvaluationCycleStatistics(this.selectedTeam.id, this.selectedCycle.id)
       .subscribe({
         next: (next) => {
-          console.log(this.selectedTeam.id, this.selectedCycle.id);
           this.statistics = next;
+        },
+        error: (error) => {
+          this.messageService.add({
+            summary: 'Error',
+            severity: 'error',
+            detail: 'An error ocurred while trying to fetch data!',
+          });
+        },
+      });
+
+    this.concreteEvaluationService
+      .getSubmittedEvaluations(this.selectedTeam.id, this.selectedCycle.id)
+      .subscribe({
+        next: (next) => {
+          this.submittedEvaluations = next;
         },
         error: (error) => {
           this.messageService.add({

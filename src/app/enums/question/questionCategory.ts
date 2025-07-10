@@ -1,7 +1,7 @@
 export enum QuestionCategory {
-    TEAMWORK = "Teamwork",
-    INITIATIVE = "Initiative",
-    PROFESSIONALISM = "Professionalism",
-    COMMUNICATION = "Communication",
-    TECHNICAL_SKILLS = "Technical skills"
+    TEAMWORK = "TEAMWORK",
+    INITIATIVE = "INITIATIVE",
+    PROFESSIONALISM = "PROFESSIONALISM",
+    COMMUNICATION = "COMMUNICATION",
+    TECHNICAL_SKILLS = "TECHNICAL_SKILL"
 }

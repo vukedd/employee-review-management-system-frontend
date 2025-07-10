@@ -35,4 +35,8 @@ export class ConcreteEvaluationService {
   getPeerEvaluationsByTeamId(teamId: number) {
     return this.http.get(environment.apiUrl + "/concreteEvaluation/peer/" + teamId.toString());
   }
+
+  getSubmittedEvaluations(teamId: number, cycleId: number) {
+    return this.http.get(environment.apiUrl + "/concreteEvaluation/submitted?teamId=" + teamId + "&cycleId=" + cycleId);
+  }
 }

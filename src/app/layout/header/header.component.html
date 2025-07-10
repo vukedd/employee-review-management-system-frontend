@@ -4,7 +4,7 @@
   <div class="flex justify-content-center align-items-center text-xl ml-3">
     RateWise
   </div>
-  <div *ngIf="getRole() == 'EMPLOYEE' || getRole() == 'MANAGER'">
+  <div *ngIf="getRole() == 'EMPLOYEE' || getRole() == 'MANAGER'" >
     <p-button [link]="true" [routerLink]="'dashboard'">Dashboard</p-button>
     <p-button
       [link]="true"

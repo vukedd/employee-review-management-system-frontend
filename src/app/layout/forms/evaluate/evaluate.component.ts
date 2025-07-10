@@ -31,7 +31,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 })
 export class EvaluateComponent {
   public responses: any[] = []
-  public reviewee: string = "";
+  public reviewee: any = "";
   public evaluation: any;
 
   constructor(

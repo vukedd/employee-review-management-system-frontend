@@ -34,8 +34,12 @@ export class HeaderComponent {
   }
 
   logout() {
-    this.authService.logout();
-    this.router.navigate(['']);
+    this.authService.logout()?.subscribe({
+      next: (next) => {
+        this.authService.removeTokens();
+        this.router.navigate(['']);
+      }
+    });
   }
 
   handleRegisterSuccess() {

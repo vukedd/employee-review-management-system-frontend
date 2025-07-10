@@ -16,7 +16,6 @@ import { EvaluationService } from '../../../services/evaluation/evaluation.servi
 import { Router } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 
-
 @Component({
   selector: 'app-create-evaluation',
   imports: [
@@ -27,46 +26,60 @@ import { InputTextModule } from 'primeng/inputtext';
     CardModule,
     CommonModule,
     TextareaModule,
-    InputTextModule
+    InputTextModule,
   ],
   templateUrl: './create-evaluation.component.html',
-  styleUrl: './create-evaluation.component.css'
+  styleUrl: './create-evaluation.component.css',
 })
 export class CreateEvaluationComponent {
-  public evalTypes: EvaluationType[] = [EvaluationType.LEAD, EvaluationType.PEER, EvaluationType.SELF]
-  public questionCategories: QuestionCategory[] = [QuestionCategory.COMMUNICATION, QuestionCategory.INITIATIVE, QuestionCategory.PROFESSIONALISM, QuestionCategory.TEAMWORK, QuestionCategory.TECHNICAL_SKILLS]
-  public questionTypes: QuestionType[] = [QuestionType.SCALAR, QuestionType.TEXT]
-  public selectedEvalType: string = "";
-  public evaluationName: string = "";
+  public evalTypes: EvaluationType[] = [
+    EvaluationType.LEAD,
+    EvaluationType.PEER,
+    EvaluationType.SELF,
+  ];
+  public questionCategories: QuestionCategory[] = [
+    QuestionCategory.COMMUNICATION,
+    QuestionCategory.INITIATIVE,
+    QuestionCategory.PROFESSIONALISM,
+    QuestionCategory.TEAMWORK,
+    QuestionCategory.TECHNICAL_SKILLS,
+  ];
+  public questionTypes: QuestionType[] = [
+    QuestionType.SCALAR,
+    QuestionType.TEXT,
+  ];
+  public selectedEvalType: string = '';
+  public evaluationName: string = '';
 
   private evalMap: Map<string, number> = new Map([
-    ["SELF", 0],
-    ["PEER", 1],
-    ["LEAD", 2]
+    ['SELF', 0],
+    ['PEER', 1],
+    ['LEAD', 2],
   ]);
 
   private qTypeMap: Map<string, number> = new Map([
-    ["Scalar", 0],
-    ["Text", 1],
+    ['SCALAR', 0],
+    ['TEXT', 1],
   ]);
 
   private qCategoryMap: Map<string, number> = new Map([
-    ["Teamwork", 0],
-    ["Initiative", 1],
-    ["Professionalism", 2],
-    ["Communication", 3],
-    ["Technical skill", 4]
+    ['TEAMWORK', 0],
+    ['INITIATIVE', 1],
+    ['PROFESSIONALISM', 2],
+    ['COMMUNICATION', 3],
+    ['TECHNICAL_SKILL', 4],
   ]);
-
 
   public evaluation: EvaluationDto = {
     type: 0,
-    questions: [{
-      content: "",
-      type: QuestionType.TEXT,
-      category: QuestionCategory.TECHNICAL_SKILLS
-    }]
-  }
+    questions: [
+      {
+        content: '',
+        type: QuestionType.TEXT,
+        category: QuestionCategory.TECHNICAL_SKILLS,
+      },
+    ],
+  };
 
   constructor(
     private messageService: MessageService,
@@ -79,8 +92,11 @@ export class CreateEvaluationComponent {
   }
 
   validStep1() {
-    if (this.selectedEvalType.trim() != "" && this.evaluationName.trim() != "") {
-      return true
+    if (
+      this.selectedEvalType.trim() != '' &&
+      this.evaluationName.trim() != ''
+    ) {
+      return true;
     }
 
     return false;
@@ -88,22 +104,21 @@ export class CreateEvaluationComponent {
 
   validStep2() {
     let isValid: boolean = true;
-    this.evaluation.questions.forEach(question => {
-      if (question.content.trim() == "") {
+    this.evaluation.questions.forEach((question) => {
+      if (question.content.trim() == '') {
         isValid = false;
-        return
+        return;
       }
     });
 
     return isValid;
   }
 
-
   addQuestion(): void {
     this.evaluation.questions.push({
       type: QuestionType.TEXT,
-      category: QuestionCategory.TECHNICAL_SKILLS, 
-      content: ''
+      category: QuestionCategory.TECHNICAL_SKILLS,
+      content: '',
     });
   }
 
@@ -117,37 +132,36 @@ export class CreateEvaluationComponent {
     this.messageService.add({
       severity: 'error',
       summary: 'Evaluation not completed!',
-      detail: 'Please check all fields before submitting!'
+      detail: 'Please check all fields before submitting!',
     });
   }
 
   submitEvaluation() {
-    let evaluationRequest : CreateEvaluationRequest | undefined = {
+    let evaluationRequest: CreateEvaluationRequest | undefined = {
       name: this.evaluationName,
       type: this.evaluation.type,
-      questions: []
-    } 
+      questions: [],
+    };
 
     if (this.evaluation.type === undefined) {
       this.sendError();
-      return
+      return;
     }
-
 
     this.evaluation.questions.forEach((question) => {
       if (question.content.trim() == '') {
         this.sendError();
         evaluationRequest = undefined;
-        return
+        return;
       }
-      
 
       evaluationRequest?.questions.push({
         type: this.qTypeMap.get(question.type),
         category: this.qCategoryMap.get(question.category),
-        content: question.content
+        content: question.content,
       });
-    })
+    });
+
 
     this.evaluationService.createEvaluation(evaluationRequest).subscribe({
       next: (next) => {
@@ -155,25 +169,27 @@ export class CreateEvaluationComponent {
         this.messageService.add({
           severity: 'success',
           summary: 'Action success!',
-          detail: 'You have successfully created a new evaluation!'
-        })
-      }, error: (error) => {
-        let errorMessage = "";
+          detail: 'You have successfully created a new evaluation!',
+        });
+      },
+      error: (error) => {
+        let errorMessage = '';
 
         switch (error.status) {
           case 403:
             errorMessage = "You don't have the permission to do this!";
             break;
           default:
-            errorMessage = "An unexpected error has occurred! Please try again later!"
+            errorMessage =
+              'An unexpected error has occurred! Please try again later!';
         }
 
         this.messageService.add({
           severity: 'error',
           summary: 'An error occured while creating a new evaluation!',
-          detail: errorMessage
-        })
-      }
-    })
+          detail: errorMessage,
+        });
+      },
+    });
   }
 }

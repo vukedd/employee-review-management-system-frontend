@@ -151,7 +151,6 @@ export class EditTeamComponent {
         });
       },
       error: (error) => {
-        console.log(error);
         this.messageService.add({
           severity: 'error',
           detail: error.error.error,
