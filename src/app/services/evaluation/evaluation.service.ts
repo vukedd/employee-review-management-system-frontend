@@ -12,4 +12,8 @@ export class EvaluationService {
   public createEvaluation(evaluation: CreateEvaluationRequest) {
     return this.http.post(environment.apiUrl + "/evaluation/create", evaluation);
   }
+  
+  public getEvaluationChoices() {
+    return this.http.get(environment.apiUrl + "/evaluation/choice");
+  }
 }

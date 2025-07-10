@@ -20,6 +20,12 @@
     >
     <p-button
       [link]="true"
+      [routerLink]="'evaluation-period/create'"
+      *ngIf="authService.getUserRole() == 'MANAGER'"
+      >Initialize Cycle</p-button
+    >
+    <p-button
+      [link]="true"
       [routerLink]="'team'"
       *ngIf="authService.getUserRole() == 'MANAGER'"
       >Teams</p-button

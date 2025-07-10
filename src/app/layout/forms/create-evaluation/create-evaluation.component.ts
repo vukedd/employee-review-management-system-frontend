@@ -14,6 +14,7 @@ import { MessageService } from 'primeng/api';
 import { CreateEvaluationRequest } from '../../../models/evaluation/CreateEvaluationRequest';
 import { EvaluationService } from '../../../services/evaluation/evaluation.service';
 import { Router } from '@angular/router';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 @Component({
@@ -25,7 +26,8 @@ import { Router } from '@angular/router';
     FormsModule,
     CardModule,
     CommonModule,
-    TextareaModule
+    TextareaModule,
+    InputTextModule
   ],
   templateUrl: './create-evaluation.component.html',
   styleUrl: './create-evaluation.component.css'
@@ -35,6 +37,7 @@ export class CreateEvaluationComponent {
   public questionCategories: QuestionCategory[] = [QuestionCategory.COMMUNICATION, QuestionCategory.INITIATIVE, QuestionCategory.PROFESSIONALISM, QuestionCategory.TEAMWORK, QuestionCategory.TECHNICAL_SKILLS]
   public questionTypes: QuestionType[] = [QuestionType.SCALAR, QuestionType.TEXT]
   public selectedEvalType: string = "";
+  public evaluationName: string = "";
 
   private evalMap: Map<string, number> = new Map([
     ["SELF", 0],
@@ -76,7 +79,7 @@ export class CreateEvaluationComponent {
   }
 
   validStep1() {
-    if (this.selectedEvalType.trim() != "") {
+    if (this.selectedEvalType.trim() != "" && this.evaluationName.trim() != "") {
       return true
     }
 
@@ -120,6 +123,7 @@ export class CreateEvaluationComponent {
 
   submitEvaluation() {
     let evaluationRequest : CreateEvaluationRequest | undefined = {
+      name: this.evaluationName,
       type: this.evaluation.type,
       questions: []
     } 

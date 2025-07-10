@@ -57,32 +57,35 @@ export class HomeComponent {
   ) {
     this.username = authService.getUsername() ?? 'User';
 
-    concreteEvaluationService.getPendingEvaluationCountByUsername().subscribe({
-      next: (next) => {
-        this.pendingEvaluationCount = next;
-      },
-      error: (error) => {},
-    });
+    if (this.authService.getUserRole() == 'EMPLOYEE') {
+      concreteEvaluationService
+        .getPendingEvaluationCountByUsername()
+        .subscribe({
+          next: (next) => {
+            this.pendingEvaluationCount = next;
+          },
+          error: (error) => {},
+        });
 
-    feedbackService.getLatestFeedback().subscribe({
-      next: (next) => {
-        this.feedback = next;
-        let submissionDate: string | undefined | null =
-          this.feedback.submissionTimestamp;
-        this.feedbackDate = submissionDate?.split('T')[0];
-      },
-      error: (error) => {
-        this.feedback = undefined;
-      },
-    });
+      feedbackService.getLatestFeedback().subscribe({
+        next: (next) => {
+          this.feedback = next;
+          let submissionDate: string | undefined | null =
+            this.feedback.submissionTimestamp;
+          this.feedbackDate = submissionDate?.split('T')[0];
+        },
+        error: (error) => {
+          this.feedback = undefined;
+        },
+      });
 
-    this.membershipService.getTeammatesByUsername().subscribe({
-      next: (next) => {
-        this.teammates = next;
-      },
-    });
+      this.membershipService.getTeammatesByUsername().subscribe({
+        next: (next) => {
+          this.teammates = next;
+        },
+      });
+    }
   }
-
   initFeedbackModal() {
     this.visible = true;
   }
@@ -106,7 +109,7 @@ export class HomeComponent {
       return;
     }
 
-    if (feedback.content.trim() == "") {
+    if (feedback.content.trim() == '') {
       this.messageService.add({
         severity: 'error',
         detail: 'Please check all field before submitting!',

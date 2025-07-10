@@ -1,0 +1,173 @@
+<p-stepper [value]="1" class="basis-[50rem]">
+  <p-step-list>
+    <p-step [value]="1">Define details</p-step>
+    <p-step [value]="2">Select evaluations</p-step>
+    <p-step [value]="3">Overview</p-step>
+  </p-step-list>
+  <p-step-panels>
+    <p-step-panel [value]="1">
+      <ng-template #content let-activateCallback="activateCallback">
+        <div clas="flex justify-content-end">
+          <div class="flex pt-6 justify-content-end">
+            <p-button
+              label="Next"
+              icon="pi pi-arrow-right"
+              iconPos="right"
+              (onClick)="activateCallback(2)"
+              [disabled]="!validStep1()"
+              class="mb-3"
+            />
+          </div>
+        </div>
+        <div
+          class="p-4 surface-card border-round shadow-2 flex justify-content-center"
+        >
+          <div class="flex flex-column gap-4">
+            <div class="flex flex-column gap-2">
+              <h2 class="text-lg font-semibold">Name:</h2>
+              <input
+                pInputText
+                class="w-full md:w-30rem"
+                [(ngModel)]="cycleName"
+                placeholder="Give this cycle a name"
+              />
+            </div>
+
+            <div class="flex flex-column gap-2">
+              <h2 class="text-lg font-semibold">Description:</h2>
+              <textarea
+                rows="5"
+                cols="30"
+                pTextarea
+                class="w-full md:w-30rem"
+                [(ngModel)]="cycleDescription"
+                placeholder="What is the point of this cycle?"
+              ></textarea>
+            </div>
+
+            <div class="flex flex-column md:flex-row gap-4">
+              <div class="flex flex-column gap-2">
+                <h2 class="text-lg font-semibold">Start date:</h2>
+                <p-datepicker
+                  showIcon="true"
+                  class="w-full md:w-15rem"
+                  [(ngModel)]="startDate"
+                  placeholder="Selected start date"
+                  [minDate]="minStartDate"
+                  (ngModelChange)="updateMinEndDate()"
+                />
+              </div>
+              <div class="flex flex-column gap-2">
+                <h2 class="text-lg font-semibold">End date:</h2>
+                <p-datepicker
+                  showIcon="true"
+                  class="w-full md:w-15rem"
+                  [(ngModel)]="endDate"
+                  placeholder="Selected end date"
+                  [minDate]="minEndDate"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-step-panel>
+
+    <p-step-panel [value]="2">
+      <ng-template #content let-activateCallback="activateCallback">
+        <div class="justify-content-between mb-3">
+          <div class="flex pt-6 justify-content-between">
+            <p-button
+              label="Back"
+              severity="secondary"
+              icon="pi pi-arrow-left"
+              (onClick)="activateCallback(1)"
+            />
+            <p-button
+              label="Next"
+              icon="pi pi-arrow-right"
+              iconPos="right"
+              [disabled]="!validStep2()"
+              (onClick)="activateCallback(3)"
+            />
+          </div>
+        </div>
+        <div class="flex flex-column justify-content-center align-items-center">
+          <h2 class="text-primary">Pick evaluations:</h2>
+          <p-multiselect
+            [options]="evalutions"
+            [(ngModel)]="selectedEvaluations"
+            optionLabel="name"
+            placeholder="Select evaluations"
+            [maxSelectedLabels]="3"
+            styleClass="w-full md:w-80"
+          />
+        </div>
+      </ng-template>
+    </p-step-panel>
+
+    <p-step-panel [value]="3">
+      <ng-template #content let-activateCallback="activateCallback">
+        <div class="flex pt-6 justify-content-between">
+          <p-button
+            label="Back"
+            severity="secondary"
+            icon="pi pi-arrow-left"
+            (onClick)="activateCallback(1)"
+          />
+          <p-button
+            label="Submit"
+            icon="pi pi-check"
+            iconPos="right"
+            (onClick)="submitForm()"
+          />
+        </div>
+        <div class="card p-4 mt-4">
+          <div class="card p-4 mt-4">
+            <p-card>
+              <ng-template pTemplate="title">
+                {{ cycleName }}
+              </ng-template>
+              <ng-template pTemplate="subtitle">
+                {{ cycleDescription }}
+              </ng-template>
+
+              <ng-template pTemplate="content">
+                <p-divider></p-divider>
+
+                <div class="grid mt-3">
+                  <div class="col-12 md:col-6">
+                    <div class="overview-item">
+                      <span class="font-semibold mr-2">Start Date:</span>
+                      <span>{{ startDate | date : "MM/dd/yyyy" }}</span>
+                    </div>
+                  </div>
+                  <div class="col-12 md:col-6">
+                    <div class="overview-item">
+                      <span class="font-semibold mr-2">End Date:</span>
+                      <span>{{ endDate | date : "MM/dd/yyyy" }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <h4 class="font-semibold mb-3">Included Evaluations</h4>
+                  <div class="flex flex-wrap gap-2">
+                    <p-chip
+                      *ngFor="let eval of selectedEvaluations"
+                      label="{{ eval.name }}"
+                      styleClass="p-chip-sm"
+                    >
+                    </p-chip>
+                  </div>
+                </div>
+              </ng-template>
+            </p-card>
+          </div>
+        </div>
+      </ng-template>
+    </p-step-panel>
+  </p-step-panels>
+</p-stepper>
+
+<p-toast [position]="toastService.getPosition()"></p-toast>

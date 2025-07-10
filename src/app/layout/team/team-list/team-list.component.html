@@ -1,7 +1,7 @@
 <h1 class="text-primary text-center">Teams</h1>
 <p-table [value]="teams" [tableStyle]="{ 'min-width': '50rem' }">
   <ng-template #header>
-    <tr>
+    <tr class="text-2xl">
       <th>Name</th>
       <th>Led by</th>
       <th></th>
@@ -9,8 +9,8 @@
   </ng-template>
   <ng-template #body let-team>
     <tr>
-      <td>{{ team.name }}</td>
-      <td>{{ team.leadName ?? "--" }}</td>
+      <td class="text-primary font-bold font-italic">{{ team.name }}</td>
+      <td >{{ team.leadName ?? "--" }}</td>
       <td>
         <a [href]="['/team/' + team.id]" class="text-center pi pi-info-circle no-underline text-primary"></a>
       </td>

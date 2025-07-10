@@ -11,6 +11,7 @@ import { CreateTeamComponent } from './layout/forms/create-team/create-team.comp
 import { TeamListComponent } from './layout/team/team-list/team-list.component';
 import { TeamDetailsComponent } from './layout/team/team-details/team-details.component';
 import { EditTeamComponent } from './layout/forms/edit-team/edit-team.component';
+import { CreateEvaluationPeriodComponent } from './layout/evaluation-period/create-evaluation-period/create-evaluation-period.component';
 
 export const routes: Routes = [
   {
@@ -97,4 +98,13 @@ export const routes: Routes = [
       expectedRole: 'MANAGER',
     },
   },
+  {
+    path: 'evaluation-period/create',
+    component: CreateEvaluationPeriodComponent,
+    title: 'Create evaluation period',
+    canActivate: [AuthGuard, roleGuard],
+    data: {
+      expectedRole: 'MANAGER',
+    },
+  }
 ];
