@@ -21,4 +21,8 @@ export class MembershipService {
     
     return this.http.get(environment.apiUrl + "/membership/collegues/" + username);
   }
+
+  public getTeammatesByTeamId(teamId: number) : Observable<any> {
+    return this.http.get(environment.apiUrl + "/membership/teammates/" + teamId);
+  }
 }

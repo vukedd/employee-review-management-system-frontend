@@ -123,7 +123,7 @@ export class EditTeamComponent {
     ) {
       this.messageService.add({
         severity: 'error',
-        detail: 'An error occurred while creating team',
+        detail: 'An error occurred while fetching data',
         summary: 'Please check all fields before submitting again!',
       });
       return;
