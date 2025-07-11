@@ -4,30 +4,34 @@
   <div class="flex justify-content-center align-items-center text-xl ml-3">
     RateWise
   </div>
-  <div *ngIf="getRole() == 'EMPLOYEE' || getRole() == 'MANAGER'" >
+  <div *ngIf="getRole() == 'EMPLOYEE' || getRole() == 'MANAGER'">
     <p-button [link]="true" [routerLink]="'dashboard'">Dashboard</p-button>
     <p-button
       [link]="true"
       [routerLink]="'evaluation/create'"
       *ngIf="authService.getUserRole() == 'MANAGER'"
+      class="md:inline hidden"
       >Create evaluation</p-button
     >
     <p-button
       [link]="true"
       [routerLink]="'team/create'"
       *ngIf="authService.getUserRole() == 'MANAGER'"
+      class="md:inline hidden"
       >Create Team</p-button
     >
     <p-button
       [link]="true"
       [routerLink]="'evaluation-period/create'"
       *ngIf="authService.getUserRole() == 'MANAGER'"
+      class="md:inline hidden"
       >Initialize Cycle</p-button
     >
     <p-button
       [link]="true"
       [routerLink]="'team'"
       *ngIf="authService.getUserRole() == 'MANAGER'"
+      class="md:inline hidden"
       >Teams</p-button
     >
   </div>
